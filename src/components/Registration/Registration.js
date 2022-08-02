@@ -1,19 +1,48 @@
 import Logo from "../Logo/Logo.js"
-
+import {useState} from "react"
+import {postRegistration} from "../services/trackit.js"
 import styled from "styled-components";
 import {Link} from "react-router-dom"
 
 export default function Registration() {
+
+    const [form, setForm] = useState({})
+
+    function handleForm({name, value}) {
+        setForm({
+            ...form,
+            [name] : value
+        })
+    }
+
+    function sendUserRegistration(event) {
+        event.preventDefault()
+        postRegistration(form)
+        .then(response => console.log(response))
+        .catch(response => {
+            if (response.status === "409") {
+                alert("Esse nome de usuário já existe")
+            }
+            else {
+                alert(`Ops! Ocorreu um erro inesperado, estamos trabalhando nisso! ERROR ${response.response.status}`)
+            }
+        })
+    }
+
     return (
         <>
             <Logo/>
             <Container>
-                <form>
-                    <Input type = "email" placeholder = "email"/>
-                    <Input type = "password" placeholder = "senha"/>
-                    <Input type = "text" placeholder = "nome"/>
-                    <Input type = "text" placeholder = "foto"/>
-                    <Button>Cadastrar</Button>
+                <form onSubmit = {sendUserRegistration}>
+                    <Input type = "email" placeholder = "email" name = "email" 
+                    onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
+                    <Input type = "text" placeholder = "nome" name = "name" 
+                    onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
+                    <Input type = "text" placeholder = "foto" name = "image" 
+                    onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
+                    <Input type = "password" placeholder = "senha" name = "password" 
+                    onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
+                    <Button type = "submit">Cadastrar</Button>
                 </form>
                 <Link to = {"/"}>
                     <Text>Já tem uma conta? Faça login!</Text>  

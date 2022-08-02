@@ -1,18 +1,39 @@
 import React from "react";
 import Logo from "../Logo/Logo.js"
 import {Link} from "react-router-dom"
+import {useState} from "react"
+import {postLogin} from "../services/trackit.js"
 import styled from "styled-components";
 
 
 export default function Login() {
+
+    const [form, setForm] = useState({})
+
+    function handleForm({name, value}) {
+        setForm({
+            ...form,
+            [name] : value
+        })
+    }
+
+    function sendUserLogin(event) {
+        event.preventDefault()
+        postLogin(form)
+        .then(response => console.log(response))
+        .catch(response => alert(`ERROR ${response.response.status}`))
+    }
+
     return (
         <>
             <Logo/> 
             <Container>
-                <form>
-                    <Input type = "email" placeholder = "email"/>
-                    <Input type = "password" placeholder = "senha"/>
-                    <Button>Entrar</Button>
+                <form onSubmit = {sendUserLogin}>
+                    <Input type = "email" placeholder = "email" name = "email"
+                    onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
+                    <Input type = "password" placeholder = "senha" name = "password" 
+                    onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
+                    <Button type = "submit">Entrar</Button>
                 </form>
                 <Link to = {"/cadastro"}>
                     <Text>Não tem uma conta? Cadastre-se!</Text>
