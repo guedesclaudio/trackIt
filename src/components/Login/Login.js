@@ -22,6 +22,7 @@ export default function Login() {
     )
 }
 
+
 const Container = styled.div`
     width: 303px;
     margin: 0 auto;
@@ -34,7 +35,13 @@ const Input = styled.input`
     color: #D4D4D4;
     background-color: #FFFFFF;
     border: 1px solid #D4D4D4;
-    margin: 10px auto;
+    margin: 5px auto;
+    color:#DBDBDB;
+    font-family: 'Lexend Deca', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
 `
 
 const Button = styled.button`
@@ -45,6 +52,7 @@ const Button = styled.button`
     border: none;
     color: #FFFFFF;
     font-size: 21px;
+    font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     line-height: 26px;
 `
@@ -52,7 +60,7 @@ const Button = styled.button`
 const Text = styled.h1`
     margin-top: 20px;
     text-align: center;
-    font-family: Lexend Deca;
+    font-family: 'Lexend Deca', sans-serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 17px;
