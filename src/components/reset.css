@@ -50,3 +50,7 @@ table {
 body {
 	background-color: #E5E5E5; /* tirar isso*/
 }
+
+* {
+	text-decoration: none; /* tirar isso*/
+}

@@ -23,7 +23,7 @@ export default function Login() {
         postLogin(form)
         .then(response => {
             resetForm()
-            navigate("/today", { state: form })
+            navigate("/hoje", { state: form })
         }) //rever como passa informacao pelo navigate
         .catch(response => {
             resetForm()

@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "../Login/Login.js"
 import Today from "../Today/Today.js";
+import Habit from "../Habit/Habit.js"
+import History from "../History/History.js"
 import Registration from "../Registration/Registration.js"
 import "../reset.css"
 
@@ -11,7 +13,9 @@ export default function App() {
             <Routes>
                 <Route path="/" element = {<Login/>}/>
                 <Route path="/cadastro" element = {<Registration/>}/>
-                <Route path="/today" element = {<Today/>}/>
+                <Route path="/hoje" element = {<Today/>}/>
+                <Route path="/habitos" element = {<Habit/>}/>
+                <Route path="/historico" element = {<History/>}/>
             </Routes>
         </BrowserRouter>
     )
