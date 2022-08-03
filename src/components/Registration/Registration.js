@@ -3,10 +3,12 @@ import {useState} from "react"
 import {postRegistration} from "../services/trackit.js"
 import styled from "styled-components";
 import {Link} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 export default function Registration() {
 
     const [form, setForm] = useState({})
+    const navigate = useNavigate()
 
     function handleForm({name, value}) {
         setForm({
@@ -18,7 +20,7 @@ export default function Registration() {
     function sendUserRegistration(event) {
         event.preventDefault()
         postRegistration(form)
-        .then(response => console.log(response))
+        .then(response => navigate("/"))
         .catch(response => {
             if (response.status === "409") {
                 alert("Esse nome de usuário já existe")

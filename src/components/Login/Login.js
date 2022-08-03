@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../Logo/Logo.js"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import {useState} from "react"
 import {postLogin} from "../services/trackit.js"
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import styled from "styled-components";
 export default function Login() {
 
     const [form, setForm] = useState({})
+    const navigate = useNavigate()
 
     function handleForm({name, value}) {
         setForm({
@@ -20,8 +21,18 @@ export default function Login() {
     function sendUserLogin(event) {
         event.preventDefault()
         postLogin(form)
-        .then(response => console.log(response))
-        .catch(response => alert(`ERROR ${response.response.status}`))
+        .then(response => {
+            resetForm()
+            navigate("/today", { state: form })
+        }) //rever como passa informacao pelo navigate
+        .catch(response => {
+            resetForm()
+            alert(`ERROR ${response.response.status}`)
+        })
+    }
+
+    function resetForm() {
+        setForm({})
     }
 
     return (
@@ -29,7 +40,7 @@ export default function Login() {
             <Logo/> 
             <Container>
                 <form onSubmit = {sendUserLogin}>
-                    <Input type = "email" placeholder = "email" name = "email"
+                    <Input type = "email" placeholder = "email" name = "email" 
                     onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
                     <Input type = "password" placeholder = "senha" name = "password" 
                     onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
@@ -53,11 +64,11 @@ const Input = styled.input`
     height: 45px;
     width: 303px;
     border-radius: 5px;
-    color: #D4D4D4;
+    /*color: #D4D4D4;*/
     background-color: #FFFFFF;
     border: 1px solid #D4D4D4;
     margin: 5px auto;
-    color:#DBDBDB;
+    /*color:#DBDBDB;*/
     font-family: 'Lexend Deca', sans-serif;
     font-style: normal;
     font-weight: 400;
