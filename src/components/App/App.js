@@ -13,12 +13,13 @@ export default function App() {
 
     const [token, setToken] = useState("")
     const [callApi, setCallApi] = useState(false)
+    const [perfilImage, setPerfilImage] = useState("")
     //const [data, setData] = useState([])
     //const [name, setName] = useState("")
 
 
     return (
-        <UserContext.Provider value = {{token, setToken, callApi, setCallApi}}>
+        <UserContext.Provider value = {{token, setToken, callApi, setCallApi, perfilImage, setPerfilImage}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element = {<Login/>}/>

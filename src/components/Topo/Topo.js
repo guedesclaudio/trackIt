@@ -1,7 +1,12 @@
 import styled from "styled-components"
 import {Link} from "react-router-dom"
+import { useContext } from "react";
+import UserContext from "../contexts/userContext.js";
 
 export default function Topo() {
+
+    const {perfilImage} = useContext(UserContext)
+
     return (
         <Container>
             <Link to = {"/"}>
@@ -9,7 +14,7 @@ export default function Topo() {
                     Trackit
                 </Title>
             </Link>
-            <ImgPerfil src = ""/>
+            <ImgPerfil src = {perfilImage}/>
         </Container>
     )
 }

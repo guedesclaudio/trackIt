@@ -1,11 +1,18 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { getHabitsToday } from "../services/trackit.js";
+import UserContext from "../contexts/userContext.js";
+import { useContext } from "react";
 
-function Card() {
+function Card({
+    name,
+    days
+}) {
     return (
         <Container>
             <Habit>
                 <Title>
-                    Ler 1 capítulo de livro
+                    {name}
                 </Title>
                 <Sequence>
                     Sequência atual: 3 dias  
@@ -22,11 +29,24 @@ function Card() {
 }
 
 export default function Cards() {
+
+    const {token} = useContext(UserContext)
+    const [habitsToday, setHabitsToday] = useState([])
+
+    useEffect(() => {
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        getHabitsToday(config)
+        .then(response => setHabitsToday(response.data))
+        .catch(response => console.log(response))
+    },[])
+
     return (
         <>
-            <Card/>
-            <Card/>
-            <Card/>
+            {habitsToday.map(value => <Card key = {value.id} name = {value.name} days = {value.days}/>)}
         </>
     )
 }

@@ -2,18 +2,48 @@ import Topo from "../Topo/Topo.js";
 import Cards from "../Cards/Cards.js";
 import Footer from "../Footer/Footer.js";
 import styled from "styled-components";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/userContext.js";
+import dayjs from "dayjs";
 
 export default function Today() {
     const {token} = useContext(UserContext)
-    console.log(token)
+    const [nameDay, setNameDay] = useState()
+    const dayWeek = dayjs().day()
+    useEffect(() => {
+        switch (dayWeek) {
+            case 0 :
+                setNameDay("Domingo")
+                break;
+            case 1 :
+                setNameDay("Segunda")
+                break
+            case 2 :
+                setNameDay("Terça")
+                break
+            case 3 :
+                setNameDay("Quarta")
+                break
+            case 4 :
+                setNameDay("Quinta")
+                break
+            case 5 :
+                setNameDay("Sexta")
+                break
+            case 6 :
+                setNameDay("Sábado")
+                break
+            default:
+                break;
+        }
+    })
+    
     return (
         <>
         <Topo/>
         <Container>
             <TextDate>
-                Segunda, 17/05
+                {`${nameDay} ${dayjs().date()}/${dayjs().month()}`}
             </TextDate>
             <Warning>
                 Nenhum hábito concluído ainda

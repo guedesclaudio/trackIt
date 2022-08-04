@@ -40,8 +40,9 @@ function deleteHabit(id, config) {
     return promise
 }
 
-function getHabitsToday() {
-
+function getHabitsToday(config) {
+    const promise = axios.get(`${baseURL}/habits/today`, config)
+    return promise
 }
 
 function postHabitDone() {

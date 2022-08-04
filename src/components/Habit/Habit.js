@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { getHabits } from "../services/trackit.js";
 import UserContext from "../contexts/userContext.js";
+import plusImg from "./plus.png"
 
 export default function Habit() {
 
@@ -36,7 +37,7 @@ export default function Habit() {
                         Meus hábitos
                     </Title>
                     <Plus onClick = {() => setPlus(!plus)}>
-
+                        <img src = {plusImg}/>
                     </Plus>
                 </Create>
                     {plus ? <FormHabit plus = {plus} setPlus = {setPlus}/> : ""}
@@ -79,6 +80,9 @@ const Plus = styled.div`
     border-radius: 5px;
     background-color: #52B6FF;
     margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 const Text = styled.p`
     font-family: "Lexend Deca";

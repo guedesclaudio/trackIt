@@ -8,10 +8,11 @@ import { useContext } from "react";
 import UserContext from "../contexts/userContext.js";
 
 
+
 export default function Login() {
 
     const [form, setForm] = useState({})
-    const {token, setToken} = useContext(UserContext)
+    const {token, setToken, setPerfilImage} = useContext(UserContext)
     //const {name, setName} = useContext(UserContext)
     const navigate = useNavigate()
 
@@ -26,8 +27,8 @@ export default function Login() {
         event.preventDefault()
         postLogin(form)
         .then(response => {
-            console.log(response.data)
             setToken(response.data.token)
+            setPerfilImage(response.data.image)
             //setName(response.data.name)
             const token = {name: response.data.name, token: response.data.token} //localstorage
             const serializedToken = JSON.stringify(token) //localstorage

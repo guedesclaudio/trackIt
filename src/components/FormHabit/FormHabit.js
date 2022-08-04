@@ -4,6 +4,7 @@ import {postHabit} from "../services/trackit.js"
 import { useContext } from "react";
 import UserContext from "../contexts/userContext.js";
 
+
 function Days({
     day,
     numberDay,
@@ -47,13 +48,13 @@ export default function FormHabit({
     const [disabled, setDisabled] = useState("")
     const [opacity, setOpacity] = useState(1)
     const nameDays = [
-        {day: "D", numberDay: 1, select:false},
-        {day: "S", numberDay: 2, select:false},
-        {day: "T", numberDay: 3, select:false},
+        {day: "D", numberDay: 0, select:false},
+        {day: "S", numberDay: 1, select:false},
+        {day: "T", numberDay: 2, select:false},
+        {day: "Q", numberDay: 3, select:false},
         {day: "Q", numberDay: 4, select:false},
-        {day: "Q", numberDay: 5, select:false},
+        {day: "S", numberDay: 5, select:false},
         {day: "S", numberDay: 6, select:false},
-        {day: "S", numberDay: 7, select:false},
     ]
     function receiveEvent(event) {
         setHabit(event.target.value)
