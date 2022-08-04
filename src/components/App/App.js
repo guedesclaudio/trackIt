@@ -12,11 +12,13 @@ import "../reset.css"
 export default function App() {
 
     const [token, setToken] = useState("")
-    const [data, setData] = useState([])
+    const [callApi, setCallApi] = useState(false)
+    //const [data, setData] = useState([])
+    //const [name, setName] = useState("")
 
 
     return (
-        <UserContext.Provider value = {{token, setToken, data, setData}}>
+        <UserContext.Provider value = {{token, setToken, callApi, setCallApi}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element = {<Login/>}/>

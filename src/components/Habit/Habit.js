@@ -10,9 +10,8 @@ import UserContext from "../contexts/userContext.js";
 
 export default function Habit() {
 
-    const {token, setToken} = useContext(UserContext)
+    const {token, callApi} = useContext(UserContext)
     const [plus, setPlus] = useState(false)
-    const {data, setData} = useContext(UserContext)
     const [ teste, setTeste] = useState([])
 
     useEffect(() => { //so pra testar, nao é o lugar dela aqui , tirar as variaveis que nao for usar mais
@@ -24,11 +23,9 @@ export default function Habit() {
         getHabits(config)
         .then(response => {
             setTeste(response.data)
-            //setDays(response.data.days)
-            console.log(teste)
         })
         .catch(response => console.log(response))
-    }, [])
+    }, [callApi])
 
     return (
         <>
@@ -42,7 +39,7 @@ export default function Habit() {
 
                     </Plus>
                 </Create>
-                    {plus ? <FormHabit/> : ""}
+                    {plus ? <FormHabit plus = {plus} setPlus = {setPlus}/> : ""}
                     {teste.length > 0 ? <ListHabits/> :  
                     <Text>
                         Você não tem nenhum hábito cadastrado ainda. 

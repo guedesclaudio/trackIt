@@ -1,6 +1,19 @@
 import axios from "axios"
 
+
 const baseURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit"
+/*
+const {name} = useContext(UserContext)
+
+const tokenFromLocal = localStorage.getItem(`${name}`)
+const token = JSON.parse(tokenFromLocal)
+
+
+const config = {
+    headers: {
+        "Authorization": `Bearer ${token}`
+    }
+}*/
 
 function postRegistration(userRegistration) {
     const promise = axios.post(`${baseURL}/auth/sign-up`, userRegistration)

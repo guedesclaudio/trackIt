@@ -12,6 +12,7 @@ export default function Login() {
 
     const [form, setForm] = useState({})
     const {token, setToken} = useContext(UserContext)
+    //const {name, setName} = useContext(UserContext)
     const navigate = useNavigate()
 
     function handleForm({name, value}) {
@@ -27,6 +28,10 @@ export default function Login() {
         .then(response => {
             console.log(response.data)
             setToken(response.data.token)
+            //setName(response.data.name)
+            const token = {name: response.data.name, token: response.data.token} //localstorage
+            const serializedToken = JSON.stringify(token) //localstorage
+            localStorage.setItem(`${response.data.name}`, serializedToken) //localstorage
             navigate("/hoje")
         }) 
         .catch(response => {

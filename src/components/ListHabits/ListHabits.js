@@ -33,12 +33,14 @@ function Habit({
                 "Authorization": `Bearer ${token}`
             }
         }
-        deleteHabit(id, config)
-        .then(response => {
-            console.log(response)
-            setCallApi(!callApi)
-        })
-        .catch(response => console.log(response))
+        if (window.confirm("Tem certeza disso?") === true ) {
+            deleteHabit(id, config)
+            .then(response => {
+                console.log(response)
+                setCallApi(!callApi)
+            })
+            .catch(response => console.log(response))
+        }
     }
 
     return (
@@ -59,10 +61,8 @@ function Habit({
 
 export default function ListHabits() {
 
-    const {token, setToken} = useContext(UserContext)
-    const {data, setData} = useContext(UserContext)
-    //const [data, setData] = useState([])
-    const [callApi, setCallApi] =useState(false)
+    const {token, setToken, callApi, setCallApi} = useContext(UserContext)
+    const [data, setData] = useState([])
     //const [days, setDays] = useState([])
 
     useEffect(() => {
@@ -73,9 +73,11 @@ export default function ListHabits() {
         }
         getHabits(config)
         .then(response => {
+            console.log(response)
             setData(response.data)
-            //setDays(response.data.days)
             console.log(data)
+            console.log(response.data)
+            //setDays(response.data.days)
         })
         .catch(response => console.log(response))
     }, [callApi])
@@ -118,7 +120,6 @@ const DaysDiv = styled.div`
     display: flex;
     justify-content: left;
     align-items: center;
-    border: 1px solid red;
     margin: 10px 0 10px 10px;
 `
 

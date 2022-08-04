@@ -36,9 +36,12 @@ function Days({
     )
 }
 
-export default function FormHabit() {
+export default function FormHabit({
+    plus,
+    setPlus
+}) {
 
-    const {token, setToken} = useContext(UserContext)
+    const {token, callApi, setCallApi} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
     const [habit, setHabit] = useState("")
     const [disabled, setDisabled] = useState("")
@@ -71,9 +74,11 @@ export default function FormHabit() {
         .then(response => {
             console.log(response)
             activateForm()
+            setCallApi(!callApi)
+            setPlus(!plus)
         })
         .catch(response => {
-            console.log(response)
+            if (response.response.status === 422) alert("Preencha os campos corretamente")
             activateForm()
         })
     }
@@ -89,14 +94,13 @@ export default function FormHabit() {
     }
 
     function cancelForm() {
-        setHabit("")
-        setSelectedDays([])
+        setPlus(!plus)
     }
 
     
     return (
         <Container>
-            <input type = "text" placeholder = "nome do hábito" disabled = {disabled} value = {habit} onChange = {event => receiveEvent(event)}/>
+            <input type = "text" placeholder = "nome do hábito" required disabled = {disabled} value = {habit} onChange = {event => receiveEvent(event)}/>
             <DaysDiv>
                 {nameDays.map((value, index) => 
                 <Days 
