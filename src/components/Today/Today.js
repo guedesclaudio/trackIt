@@ -6,10 +6,13 @@ import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/userContext.js";
 import dayjs from "dayjs";
 
+
 export default function Today() {
     const {token} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
+    const [porcentage, setPorcentage] = useState(0)
     const dayWeek = dayjs().day()
+
     useEffect(() => {
         switch (dayWeek) {
             case 0 :
@@ -46,11 +49,11 @@ export default function Today() {
                 {`${nameDay} ${dayjs().date()}/${dayjs().month()}`}
             </TextDate>
             <Warning>
-                Nenhum hábito concluído ainda
+                {porcentage ? <Porcentage>{(Math.round(porcentage*100)) + "% dos hábitos concluídos"}</Porcentage> : "Nenhum hábito concluído ainda"}
             </Warning>
-            <Cards/>
+            <Cards setPorcentage = {setPorcentage}/>
         </Container>
-        <Footer/>
+        <Footer porcentage = {porcentage}/>
         </>
     )
 }
@@ -78,4 +81,13 @@ const Warning = styled.h2`
     text-align: left;
     color: #BABABA;
     margin-left: 10px;
+`
+
+const Porcentage = styled.h2`
+    font-family: "Lexend Deca";
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    text-align: left;
+    color: #8FC549;
 `

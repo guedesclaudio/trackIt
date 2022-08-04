@@ -1,26 +1,41 @@
 import styled from "styled-components";
 import {Link} from "react-router-dom"
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import 'react-circular-progressbar/dist/styles.css';
 
-export default function Footer() {
+export default function Footer({porcentage}) {
     return (
         <Container>
-            <Text>
-                <Link to = {"/habitos"}>
+            <Link to = {"/habitos"}>
+                <Text>
                     Hábito
-                </Link>
-            </Text>
+                </Text>
+            </Link>
             <Loading>
-                <TextLoad>
-                    <Link to = {"/hoje"}>
-                        Hoje
-                    </Link>
-                </TextLoad>
-            </Loading>
-            <Text>
-                <Link to = {"/historico"}>
-                    Histórico
+                <Link to = {"/hoje"}>
+                    <Circle>
+                        <CircularProgressbar value = {porcentage*100} text = {"Hoje"} styles = {{
+                            text: {
+                                fill: "#FFFFFF",
+                                fontSize: '23px',
+                                fontFamily: "Lexend Deca",
+                                fontWeight: 400,
+                              },
+                              trail: {
+                                stroke: "#52B6FF",
+                              },
+                              path: {
+                                stroke: "#FFFFFF",
+                              },
+                        }}/>;
+                    </Circle>
                 </Link>
-            </Text>
+            </Loading>
+            <Link to = {"/historico"}>
+                <Text>
+                    Histórico
+                </Text>
+            </Link>
         </Container>
     )
 }
@@ -57,6 +72,11 @@ const Loading = styled.div`
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+`
+
+const Circle = styled.div`
+    width: 81px;
+    height: 81px;
 `
 
 const TextLoad = styled.h1` // refatorar aqui fazendo herança de styled components

@@ -74,16 +74,20 @@ const Input = styled.input`
     height: 45px;
     width: 303px;
     border-radius: 5px;
-    /*color: #D4D4D4;*/
+    color: #848484;
     background-color: #FFFFFF;
     border: 1px solid #D4D4D4;
     margin: 5px auto;
-    /*color:#DBDBDB;*/
     font-family: 'Lexend Deca', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
     line-height: 25px;
+
+    &&::placeholder {
+        color: #DBDBDB;
+        padding-left: 10px;
+    }
 `
 
 const Button = styled.button`

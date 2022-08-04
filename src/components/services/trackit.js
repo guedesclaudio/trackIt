@@ -45,12 +45,14 @@ function getHabitsToday(config) {
     return promise
 }
 
-function postHabitDone() {
-
+function postHabitDone(id, config) {
+    const promise = axios.post(`${baseURL}/habits/${id}/check`, {}, config)
+    return promise
 }
 
-function postCancelHabitDone() {
-
+function postCancelHabitDone(id, config) {
+    const promise = axios.post(`${baseURL}/habits/${id}/uncheck`, {}, config)
+    return promise
 }
 
 function getHistoryDailyHabits() {

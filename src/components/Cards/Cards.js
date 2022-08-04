@@ -1,37 +1,89 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getHabitsToday } from "../services/trackit.js";
+import { getHabitsToday, postHabitDone, postCancelHabitDone } from "../services/trackit.js";
 import UserContext from "../contexts/userContext.js";
 import { useContext } from "react";
+import select from "./select.png"
+
 
 function Card({
     name,
-    days
+    token,
+    id,
+    done,
+    callApi,
+    setCallApi,
+    currentSequence,
+    highestSequence
 }) {
+
+    const [background, setBackground] = useState("#EBEBEB")
+
+    useEffect(() => {
+        done ? setBackground("#8FC549") : setBackground("#EBEBEB")
+    }, [])
+
+    function modifyHabit() {
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        if (background === "#EBEBEB") {
+            checkHabit(config)
+        }
+        else {
+            uncheckHabit(config)
+        }
+    }
+
+    function checkHabit(config) {
+         setBackground("#8FC549")
+         postHabitDone(id, config)
+         .then(response => {
+            console.log(response)
+            setCallApi(!callApi)
+         })
+         .catch(response => console.log(response))
+    }
+
+    function uncheckHabit(config) {
+        setBackground("#EBEBEB")
+        postCancelHabitDone(id, config)
+         .then(response => {
+            console.log(response)
+            setCallApi(!callApi)
+         })
+         .catch(response => console.log(response))
+    }
+
     return (
         <Container>
             <Habit>
                 <Title>
-                    {name}
+                    {name} 
                 </Title>
                 <Sequence>
-                    Sequência atual: 3 dias  
+                    Sequência atual: {currentSequence} {currentSequence === 1 ? "dia" : "dias"}
                 </Sequence>
                 <Sequence>
-                    Seu recorde: 5 dias
+                    Seu recorde: {highestSequence} {highestSequence === 1 ? "dia" : "dias"}
                 </Sequence>
             </Habit>
-            <Box>
-
+            <Box background = {background} onClick = {modifyHabit}>
+                <img src = {select}/>
             </Box>
         </Container>
     )
 }
 
-export default function Cards() {
+export default function Cards({setPorcentage}) {
 
     const {token} = useContext(UserContext)
     const [habitsToday, setHabitsToday] = useState([])
+    const [callApi, setCallApi] = useState(false)
+    
 
     useEffect(() => {
         const config = {
@@ -40,20 +92,26 @@ export default function Cards() {
             }
         }
         getHabitsToday(config)
-        .then(response => setHabitsToday(response.data))
+        .then(response => {
+            setHabitsToday(response.data)
+            setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+        })
         .catch(response => console.log(response))
-    },[])
+    },[callApi])
 
     return (
         <>
-            {habitsToday.map(value => <Card key = {value.id} name = {value.name} days = {value.days}/>)}
+            {habitsToday.map(value => <Card key = {value.id} name = {value.name} 
+            days = {value.days} token = {token} id = {value.id} 
+            done = {value.done} callApi = {callApi} setCallApi = {setCallApi} currentSequence = {value.currentSequence}
+            highestSequence = {value.highestSequence}/>)}
         </>
     )
 }
 
 const Container = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin: 20px auto;
     height: 94px;
@@ -64,7 +122,7 @@ const Container = styled.div`
 `
 
 const Habit = styled.div`
-    
+    margin-left: 10px;
 `
 
 const Title = styled.h1`
@@ -73,6 +131,7 @@ const Title = styled.h1`
     font-weight: 400;
     line-height: 25px;
     text-align: left;
+    margin-bottom: 5px;
 `
 
 const Sequence = styled.p`
@@ -87,7 +146,11 @@ const Sequence = styled.p`
 const Box = styled.div`
     height: 69px;
     width: 69px;
-    background: #EBEBEB;
+    background-color: ${props => props.background};
     border: 1px solid #E7E7E7;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
 `
