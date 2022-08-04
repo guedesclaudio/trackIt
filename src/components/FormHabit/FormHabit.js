@@ -1,5 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
+import {postHabit} from "../services/trackit.js"
+import { useContext } from "react";
+import UserContext from "../contexts/userContext.js";
 
 function Days({
     day,
@@ -33,13 +36,14 @@ function Days({
     )
 }
 
-
-
 export default function FormHabit() {
 
+    const {token, setToken} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
-
-    const days = [
+    const [habit, setHabit] = useState("")
+    const [disabled, setDisabled] = useState("")
+    const [opacity, setOpacity] = useState(1)
+    const nameDays = [
         {day: "D", numberDay: 1, select:false},
         {day: "S", numberDay: 2, select:false},
         {day: "T", numberDay: 3, select:false},
@@ -48,16 +52,8 @@ export default function FormHabit() {
         {day: "S", numberDay: 6, select:false},
         {day: "S", numberDay: 7, select:false},
     ]
-    const [habit, setHabit] = useState("")
-
     function receiveEvent(event) {
         setHabit(event.target.value)
-        const userDataForm = {
-            name: habit,
-            days: selectedDays
-        }
-
-        console.log(userDataForm)
     }
 
     function saveForm() {
@@ -65,8 +61,31 @@ export default function FormHabit() {
             name: habit,
             days: selectedDays
         }
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        disabledForm()
+        postHabit(userDataForm, config)
+        .then(response => {
+            console.log(response)
+            activateForm()
+        })
+        .catch(response => {
+            console.log(response)
+            activateForm()
+        })
+    }
 
-        console.log(userDataForm)
+    function disabledForm() {
+        setDisabled("disabled")
+        setOpacity(1.8)
+    }
+
+    function activateForm() {
+        setDisabled("")
+        setOpacity(1.0)
     }
 
     function cancelForm() {
@@ -77,9 +96,9 @@ export default function FormHabit() {
     
     return (
         <Container>
-            <input type = "text" placeholder = "nome do hábito" value = {habit} onChange = {event => receiveEvent(event)}/>
+            <input type = "text" placeholder = "nome do hábito" disabled = {disabled} value = {habit} onChange = {event => receiveEvent(event)}/>
             <DaysDiv>
-                {days.map((value, index) => 
+                {nameDays.map((value, index) => 
                 <Days 
                 key = {index} 
                 day = {value.day}
@@ -87,7 +106,7 @@ export default function FormHabit() {
                 selectedDays = {selectedDays} 
                 setSelectedDays = {setSelectedDays}/>)}
             </DaysDiv>
-            <Buttons>
+            <Buttons opacity = {opacity}>
                 <Cancel onClick = {cancelForm}>
                     Cancelar
                 </Cancel>
@@ -151,8 +170,6 @@ const DayWeek = styled.div`
     font-size: 19.976px;
     line-height: 25px;
     color: ${props => props.color};
-    /*background: #CFCFCF;
-    color: #FFFFFF;*/
 `
 
 const Buttons = styled.div`
@@ -160,6 +177,7 @@ const Buttons = styled.div`
     display: flex;
     justify-content: right;
     align-items: center;
+    filter: brightness(${props => props.opacity});
 `
 
 const Cancel = styled.button`

@@ -12,16 +12,19 @@ function postLogin(userLogin) {
     return promise
 }
 
-function postHabit() {
-
+function postHabit(userDataForm, config) {
+    const promise = axios.post(`${baseURL}/habits`, userDataForm, config)
+    return promise
 }
 
-function getHabits() {
-
+function getHabits(config) {
+    const promise = axios.get(`${baseURL}/habits`, config)
+    return promise
 }
 
-function deleteHabit() {
-
+function deleteHabit(id, config) {
+    const promise = axios.delete(`${baseURL}/habits/${id}`, config)
+    return promise
 }
 
 function getHabitsToday() {

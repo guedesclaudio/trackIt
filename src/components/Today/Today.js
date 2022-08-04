@@ -2,9 +2,12 @@ import Topo from "../Topo/Topo.js";
 import Cards from "../Cards/Cards.js";
 import Footer from "../Footer/Footer.js";
 import styled from "styled-components";
+import { useContext } from "react";
+import UserContext from "../contexts/userContext.js";
 
-export default function Today(state) {
-    console.log(state)
+export default function Today() {
+    const {token, setToken} = useContext(UserContext)
+    console.log(token)
     return (
         <>
         <Topo/>

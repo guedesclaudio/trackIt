@@ -4,11 +4,14 @@ import {Link, useNavigate} from "react-router-dom"
 import {useState} from "react"
 import {postLogin} from "../services/trackit.js"
 import styled from "styled-components";
+import { useContext } from "react";
+import UserContext from "../contexts/userContext.js";
 
 
 export default function Login() {
 
     const [form, setForm] = useState({})
+    const {token, setToken} = useContext(UserContext)
     const navigate = useNavigate()
 
     function handleForm({name, value}) {
@@ -22,12 +25,13 @@ export default function Login() {
         event.preventDefault()
         postLogin(form)
         .then(response => {
-            resetForm()
-            navigate("/hoje", { state: form })
-        }) //rever como passa informacao pelo navigate
+            console.log(response.data)
+            setToken(response.data.token)
+            navigate("/hoje")
+        }) 
         .catch(response => {
             resetForm()
-            alert(`ERROR ${response.response.status}`)
+            alert(`Informe o email e senha corretamente. ERROR ${response.response.status}`)
         })
     }
 

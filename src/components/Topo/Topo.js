@@ -1,11 +1,14 @@
 import styled from "styled-components"
+import {Link} from "react-router-dom"
 
 export default function Topo() {
     return (
         <Container>
-            <Title>
-                Trackit
-            </Title>
+            <Link to = {"/"}>
+                <Title>
+                    Trackit
+                </Title>
+            </Link>
             <ImgPerfil src = ""/>
         </Container>
     )

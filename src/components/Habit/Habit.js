@@ -1,17 +1,39 @@
 import styled from "styled-components";
-import Topo from "../Topo/Topo";
-import Footer from "../Footer/Footer";
-import FormHabit from "../FormHabit/FormHabit";
-import { useState } from "react";
+import Topo from "../Topo/Topo.js";
+import Footer from "../Footer/Footer.js";
+import FormHabit from "../FormHabit/FormHabit.js";
+import ListHabits from "../ListHabits/ListHabits.js"
+import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { getHabits } from "../services/trackit.js";
+import UserContext from "../contexts/userContext.js";
 
 export default function Habit() {
 
+    const {token, setToken} = useContext(UserContext)
     const [plus, setPlus] = useState(false)
+    const {data, setData} = useContext(UserContext)
+    const [ teste, setTeste] = useState([])
+
+    useEffect(() => { //so pra testar, nao é o lugar dela aqui , tirar as variaveis que nao for usar mais
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        getHabits(config)
+        .then(response => {
+            setTeste(response.data)
+            //setDays(response.data.days)
+            console.log(teste)
+        })
+        .catch(response => console.log(response))
+    }, [])
 
     return (
         <>
             <Topo/>
-            <Container>
+            <Container> 
                 <Create>
                     <Title>
                         Meus hábitos
@@ -21,10 +43,12 @@ export default function Habit() {
                     </Plus>
                 </Create>
                     {plus ? <FormHabit/> : ""}
-                <Text>
-                    Você não tem nenhum hábito cadastrado ainda. 
-                    Adicione um hábito para começar a trackear!
-                </Text>
+                    {teste.length > 0 ? <ListHabits/> :  
+                    <Text>
+                        Você não tem nenhum hábito cadastrado ainda. 
+                        Adicione um hábito para começar a trackear!
+                    </Text>
+                    }
             </Container>
             <Footer/>
         </>    
