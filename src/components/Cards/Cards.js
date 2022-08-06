@@ -8,7 +8,7 @@ import select from "./select.png"
 
 function Card({
     name,
-    token,
+    userData,
     id,
     done,
     callApi,
@@ -27,7 +27,7 @@ function Card({
 
         const config = {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${userData.token}`
             }
         }
         if (background === "#EBEBEB") {
@@ -42,7 +42,6 @@ function Card({
          setBackground("#8FC549")
          postHabitDone(id, config)
          .then(response => {
-            console.log(response)
             setCallApi(!callApi)
          })
          .catch(response => console.log(response))
@@ -52,7 +51,6 @@ function Card({
         setBackground("#EBEBEB")
         postCancelHabitDone(id, config)
          .then(response => {
-            console.log(response)
             setCallApi(!callApi)
          })
          .catch(response => console.log(response))
@@ -83,7 +81,7 @@ function Card({
 
 export default function Cards() {
 
-    const {token, porcentage, setPorcentage, teste} = useContext(UserContext)
+    const {porcentage, setPorcentage, teste, userData} = useContext(UserContext)
     const [habitsToday, setHabitsToday] = useState([])
     const [callApi, setCallApi] = useState(false)
     
@@ -91,7 +89,7 @@ export default function Cards() {
     useEffect(() => {
         const config = {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${userData.token}`
             }
         }
         getHabitsToday(config)
@@ -105,7 +103,7 @@ export default function Cards() {
     return (
         <>
             {habitsToday.map(value => <Card key = {value.id} name = {value.name} 
-            days = {value.days} token = {token} id = {value.id} 
+            days = {value.days} userData = {userData} id = {value.id} 
             done = {value.done} callApi = {callApi} setCallApi = {setCallApi} currentSequence = {value.currentSequence}
             highestSequence = {value.highestSequence}/>)}
         </>

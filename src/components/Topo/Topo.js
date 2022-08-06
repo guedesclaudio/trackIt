@@ -5,7 +5,7 @@ import UserContext from "../contexts/userContext.js";
 
 export default function Topo() {
 
-    const {perfilImage} = useContext(UserContext)
+    const {userData} = useContext(UserContext)
 
     return (
         <Container>
@@ -14,7 +14,7 @@ export default function Topo() {
                     Trackit
                 </Title>
             </Link>
-            <ImgPerfil src = {perfilImage}/>
+            <ImgPerfil src = {userData.image}/>
         </Container>
     )
 }

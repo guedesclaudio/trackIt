@@ -12,15 +12,18 @@ import "../reset.css"
 
 export default function App() {
 
-    const [token, setToken] = useState("")
+    const [userData, setUserData] = useState({})
     const [callApi, setCallApi] = useState(false)
-    const [perfilImage, setPerfilImage] = useState("")
     const [porcentage, setPorcentage] = useState(0)
     const [teste, setTeste] = useState(false)
 
 
     return (
-        <UserContext.Provider value = {{token, setToken, callApi, setCallApi, perfilImage, setPerfilImage, porcentage, setPorcentage, teste, setTeste}}>
+        <UserContext.Provider 
+        value = {{callApi, setCallApi, 
+        porcentage, setPorcentage, 
+        teste, setTeste,
+        userData, setUserData}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element = {<Login/>}/>

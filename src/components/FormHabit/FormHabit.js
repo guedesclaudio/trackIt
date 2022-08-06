@@ -47,16 +47,14 @@ export default function FormHabit({
 }) {
 
     const dots = <ThreeDots color="#FFFFFF" height={40} width={40}/>
-    const {token, callApi, setCallApi, teste, setTeste} = useContext(UserContext)
+    const {callApi, setCallApi, teste, setTeste, userData} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
     const [disabled, setDisabled] = useState("")
     const [opacity, setOpacity] = useState(1)
     const [load, setLoad] = useState("Salvar")
     const [acess, setAcess] = useState(true)
     const [background, setBackground] = useState("#FFFFFF")
-    const [a, setA] = useState("")
-    //const [habit, setHabit] = useState("")
-    console.log(a)
+   
     const nameDays = [
         {day: "D", numberDay: 0, select:false},
         {day: "S", numberDay: 1, select:false},
@@ -66,6 +64,7 @@ export default function FormHabit({
         {day: "S", numberDay: 5, select:false},
         {day: "S", numberDay: 6, select:false},
     ]
+
     function receiveEvent(event) {
         setHabit(event.target.value)
     }
@@ -77,7 +76,7 @@ export default function FormHabit({
         }
         const config = {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${userData.token}`
             }
         }
         disabledForm()
@@ -88,7 +87,6 @@ export default function FormHabit({
         }
         postHabit(userDataForm, config)
         .then(response => {
-            console.log(response)
             activateForm()
             setCallApi(!callApi)
             setTeste(!teste)

@@ -11,15 +11,15 @@ import plusImg from "./plus.png"
 
 export default function Habit() {
 
-    const {token, callApi} = useContext(UserContext)
+    const {callApi, userData} = useContext(UserContext)
     const [plus, setPlus] = useState(false)
-    const [ teste, setTeste] = useState([])
+    const [teste, setTeste] = useState([])//
     const [habit, setHabit] = useState("")
 
     useEffect(() => { //so pra testar, nao é o lugar dela aqui , tirar as variaveis que nao for usar mais
         const config = {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${userData.token}`
             }
         }
         getHabits(config)

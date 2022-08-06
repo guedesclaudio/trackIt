@@ -17,13 +17,10 @@ export default function Login() {
     const [background, setBackground] = useState("#FFFFFF")
     const [opacity, setOpacity] = useState(1)
     const [form, setForm] = useState({})
-    const {setToken, setPerfilImage} = useContext(UserContext)
-    
-    //const {name, setName} = useContext(UserContext)
+    const {userData, setUserData} = useContext(UserContext)
     const navigate = useNavigate()
 
     
-
     function handleForm({name, value}) {
         setForm({
             ...form,
@@ -33,32 +30,35 @@ export default function Login() {
 
     function sendUserLogin(event) {
         event.preventDefault()
-        setOpacity(0.7)
-        setDisabled(disabled)
-        setLoad(dots)
-        setBackground("#F2F2F2")
+        disabledForm()
         postLogin(form)
         .then(response => {
-            setToken(response.data.token)
-            setPerfilImage(response.data.image)
-            //setName(response.data.name)
-            const token = {name: response.data.name, token: response.data.token} //localstorage
-            const serializedToken = JSON.stringify(token) //localstorage
-            localStorage.setItem(`${response.data.name}`, serializedToken) //localstorage
+            setUserData({...userData,
+                name: response.data.name, 
+                token: response.data.token,
+                image: response.data.image,
+                email: response.data.email
+            }) 
             navigate("/hoje")
         }) 
         .catch(response => {
-            setOpacity(1)
-            setLoad("Entrar")
-            setDisabled("")
-            setBackground("#FFFFFF")
+            activateForm()
             alert(`Informe o email e senha corretamente. ERROR ${response.response.status}`)
         })
     }
 
-    function resetForm() {
-        console.log(form) //tirar essa funcao
-        setForm({})
+    function disabledForm() {
+        setOpacity(0.7)
+        setDisabled(disabled)
+        setLoad(dots)
+        setBackground("#F2F2F2")
+    }
+
+    function activateForm() {
+        setOpacity(1)
+        setLoad("Entrar")
+        setDisabled("")
+        setBackground("#FFFFFF")
     }
 
     return (

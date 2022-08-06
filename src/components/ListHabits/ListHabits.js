@@ -10,7 +10,7 @@ function Habit({
     days,
     name,
     id,
-    token,
+    userData,
     callApi,
     setCallApi
 }) {
@@ -46,13 +46,12 @@ function Habit({
     function undoHabit() {
         const config = {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${userData.token}`
             }
         }
         if (window.confirm("Tem certeza disso?") === true ) {
             deleteHabit(id, config)
             .then(response => {
-                console.log(response)
                 setCallApi(!callApi)
             })
             .catch(response => console.log(response))
@@ -77,13 +76,13 @@ function Habit({
 
 export default function ListHabits() {
 
-    const {token, callApi, setCallApi} = useContext(UserContext)
+    const {callApi, setCallApi, userData} = useContext(UserContext)
     const [data, setData] = useState([])
 
     useEffect(() => {
         const config = {
             headers: {
-                "Authorization": `Bearer ${token}`
+                "Authorization": `Bearer ${userData.token}`
             }
         }
         getHabits(config)
@@ -93,7 +92,7 @@ export default function ListHabits() {
 
     return (
         <>
-            {data.map((value, index) => <Habit key = {index} days = {value.days} name = {value.name} id = {value.id} token = {token} callApi = {callApi}
+            {data.map((value, index) => <Habit key = {index} days = {value.days} name = {value.name} id = {value.id} userData = {userData} callApi = {callApi}
             setCallApi = {setCallApi}/>)}
         </>
     )
