@@ -1,10 +1,12 @@
 import axios from "axios"
-
+import UserContext from "../contexts/userContext"
+import { useContext } from "react"
 
 const baseURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit"
 /*
-const {name} = useContext(UserContext)
-
+const {token} = useContext(UserContext)
+console.log(token)*/
+/*
 const tokenFromLocal = localStorage.getItem(`${name}`)
 const token = JSON.parse(tokenFromLocal)
 

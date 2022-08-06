@@ -78,9 +78,9 @@ function Card({
     )
 }
 
-export default function Cards({setPorcentage}) {
+export default function Cards() {
 
-    const {token} = useContext(UserContext)
+    const {token, porcentage, setPorcentage, teste} = useContext(UserContext)
     const [habitsToday, setHabitsToday] = useState([])
     const [callApi, setCallApi] = useState(false)
     
@@ -97,7 +97,7 @@ export default function Cards({setPorcentage}) {
             setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
         })
         .catch(response => console.log(response))
-    },[callApi])
+    },[callApi, teste])
 
     return (
         <>

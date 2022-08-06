@@ -42,7 +42,7 @@ export default function FormHabit({
     setPlus
 }) {
 
-    const {token, callApi, setCallApi} = useContext(UserContext)
+    const {token, callApi, setCallApi, teste, setTeste} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
     const [habit, setHabit] = useState("")
     const [disabled, setDisabled] = useState("")
@@ -76,7 +76,8 @@ export default function FormHabit({
             console.log(response)
             activateForm()
             setCallApi(!callApi)
-            setPlus(!plus)
+            setTeste(!teste)
+            
         })
         .catch(response => {
             if (response.response.status === 422) alert("Preencha os campos corretamente")

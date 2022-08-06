@@ -4,10 +4,16 @@ import {postRegistration} from "../services/trackit.js"
 import styled from "styled-components";
 import {Link} from "react-router-dom"
 import { useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function Registration() {
 
     const [form, setForm] = useState({})
+    const dots = <ThreeDots color="#FFFFFF" height={80} width={80}/>
+    const [load, setLoad] = useState("Entrar")
+    const [opacity, setOpacity] = useState(1)
+    const [disabled, setDisabled] = useState("")
+    const [background, setBackground] = useState("#FFFFFF")
     const navigate = useNavigate()
 
     function handleForm({name, value}) {
@@ -19,6 +25,10 @@ export default function Registration() {
 
     function sendUserRegistration(event) {
         event.preventDefault()
+        setOpacity(0.7)
+        setDisabled(disabled)
+        setLoad(dots)
+        setBackground("#F2F2F2")
         postRegistration(form)
         .then(response => navigate("/"))
         .catch(response => {
@@ -28,6 +38,10 @@ export default function Registration() {
             else {
                 alert(`Ops! Ocorreu um erro inesperado, estamos trabalhando nisso! ERROR ${response.response.status}`)
             }
+            setOpacity(1)
+            setLoad("Entrar")
+            setDisabled("")
+            setBackground("#FFFFFF")
         })
     }
 
@@ -36,15 +50,15 @@ export default function Registration() {
             <Logo/>
             <Container>
                 <form onSubmit = {sendUserRegistration}>
-                    <Input type = "email" placeholder = "email" name = "email" 
+                    <Input type = "email" placeholder = "email" name = "email" disabled = {disabled} background = {background}
                     onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
-                    <Input type = "text" placeholder = "nome" name = "name" 
+                    <Input type = "text" placeholder = "nome" name = "name" disabled = {disabled} background = {background}
                     onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
-                    <Input type = "text" placeholder = "foto" name = "image" 
+                    <Input type = "text" placeholder = "foto" name = "image" disabled = {disabled} background = {background}
                     onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
-                    <Input type = "password" placeholder = "senha" name = "password" 
+                    <Input type = "password" placeholder = "senha" name = "password" disabled = {disabled} background = {background}
                     onChange = {event => handleForm({name : event.target.name, value : event.target.value})}/>
-                    <Button type = "submit">Cadastrar</Button>
+                    <Button type = "submit" disabled = {disabled} opacity = {opacity}>{load}</Button>
                 </form>
                 <Link to = {"/"}>
                     <Text>Já tem uma conta? Faça login!</Text>  
@@ -92,6 +106,9 @@ const Button = styled.button`
     font-family: 'Lexend Deca', sans-serif;
     font-weight: 400;
     line-height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const Text = styled.h1`

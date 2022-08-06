@@ -15,18 +15,34 @@ function Habit({
     setCallApi
 }) {
 
-    const [background, setBackground] = useState("#FFFFFF")
-    const [color, setColor] = useState("#DBDBDB")
     const nameDays = [
-        {day: "D", numberDay: 1},
-        {day: "S", numberDay: 2},
-        {day: "T", numberDay: 3},
+        {day: "D", numberDay: 0},
+        {day: "S", numberDay: 1},
+        {day: "T", numberDay: 2},
+        {day: "Q", numberDay: 3},
         {day: "Q", numberDay: 4},
-        {day: "Q", numberDay: 5},
+        {day: "S", numberDay: 5},
         {day: "S", numberDay: 6},
-        {day: "S", numberDay: 7},
     ]
 
+    const nameDays2 = [
+        {day: "D", numberDay: 0, background: days.includes(nameDays[0].numberDay)? "#CFCFCF":"#FFFFFF", 
+        color: days.includes(nameDays[0].numberDay)? "#FFFFFF":"#DBDBDB"},
+        {day: "S", numberDay: 1, background: days.includes(nameDays[1].numberDay)? "#CFCFCF":"#FFFFFF", 
+        color: days.includes(nameDays[1].numberDay)? "#FFFFFF":"#DBDBDB"},
+        {day: "T", numberDay: 2, background: days.includes(nameDays[2].numberDay)? "#CFCFCF":"#FFFFFF", 
+        color: days.includes(nameDays[2].numberDay)? "#FFFFFF":"#DBDBDB"},
+        {day: "Q", numberDay: 3, background: days.includes(nameDays[3].numberDay)? "#CFCFCF":"#FFFFFF", 
+        color: days.includes(nameDays[3].numberDay)? "#FFFFFF":"#DBDBDB"},
+        {day: "Q", numberDay: 4, background: days.includes(nameDays[4].numberDay)? "#CFCFCF":"#FFFFFF", 
+        color: days.includes(nameDays[4].numberDay)? "#FFFFFF":"#DBDBDB"},
+        {day: "S", numberDay: 5, background: days.includes(nameDays[5].numberDay)? "#CFCFCF":"#FFFFFF", 
+        color: days.includes(nameDays[5].numberDay)? "#FFFFFF":"#DBDBDB"},
+        {day: "S", numberDay: 6, background: days.includes(nameDays[6].numberDay)? "#CFCFCF":"#FFFFFF", 
+        color: days.includes(nameDays[6].numberDay)? "#FFFFFF":"#DBDBDB"},
+    ]
+    
+    
     function undoHabit() {
         const config = {
             headers: {
@@ -50,7 +66,7 @@ function Habit({
                     {name}
                 </Title>
                 <DaysDiv>
-                    {nameDays.map((value, index) => <DayWeek key = {index} background = {background} color = {color}>{value.day}</DayWeek>)}
+                    {nameDays2.map((value, index) => <DayWeek key = {index} background = {value.background} color = {value.color}>{value.day}</DayWeek>)}
                 </DaysDiv>
             </div>
             <img src = {trash} onClick = {undoHabit}/>
@@ -61,9 +77,8 @@ function Habit({
 
 export default function ListHabits() {
 
-    const {token, setToken, callApi, setCallApi} = useContext(UserContext)
+    const {token, callApi, setCallApi} = useContext(UserContext)
     const [data, setData] = useState([])
-    //const [days, setDays] = useState([])
 
     useEffect(() => {
         const config = {
@@ -72,13 +87,7 @@ export default function ListHabits() {
             }
         }
         getHabits(config)
-        .then(response => {
-            console.log(response)
-            setData(response.data)
-            console.log(data)
-            console.log(response.data)
-            //setDays(response.data.days)
-        })
+        .then(response => setData(response.data))
         .catch(response => console.log(response))
     }, [callApi])
 

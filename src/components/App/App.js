@@ -9,17 +9,18 @@ import Registration from "../Registration/Registration.js"
 import UserContext from "../contexts/userContext.js";
 import "../reset.css"
 
+
 export default function App() {
 
     const [token, setToken] = useState("")
     const [callApi, setCallApi] = useState(false)
     const [perfilImage, setPerfilImage] = useState("")
-    //const [data, setData] = useState([])
-    //const [name, setName] = useState("")
+    const [porcentage, setPorcentage] = useState(0)
+    const [teste, setTeste] = useState(false)
 
 
     return (
-        <UserContext.Provider value = {{token, setToken, callApi, setCallApi, perfilImage, setPerfilImage}}>
+        <UserContext.Provider value = {{token, setToken, callApi, setCallApi, perfilImage, setPerfilImage, porcentage, setPorcentage, teste, setTeste}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element = {<Login/>}/>

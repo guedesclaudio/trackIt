@@ -8,9 +8,9 @@ import dayjs from "dayjs";
 
 
 export default function Today() {
-    const {token} = useContext(UserContext)
+    const {porcentage, setPorcentage} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
-    const [porcentage, setPorcentage] = useState(0)
+    //const [porcentage, setPorcentage] = useState(0)
     const dayWeek = dayjs().day()
 
     useEffect(() => {
@@ -51,9 +51,9 @@ export default function Today() {
             <Warning>
                 {porcentage ? <Porcentage>{(Math.round(porcentage*100)) + "% dos hábitos concluídos"}</Porcentage> : "Nenhum hábito concluído ainda"}
             </Warning>
-            <Cards setPorcentage = {setPorcentage}/>
+            <Cards />
         </Container>
-        <Footer porcentage = {porcentage}/>
+        <Footer />
         </>
     )
 }
