@@ -14,6 +14,7 @@ export default function Habit() {
     const {token, callApi} = useContext(UserContext)
     const [plus, setPlus] = useState(false)
     const [ teste, setTeste] = useState([])
+    const [habit, setHabit] = useState("")
 
     useEffect(() => { //so pra testar, nao é o lugar dela aqui , tirar as variaveis que nao for usar mais
         const config = {
@@ -40,7 +41,7 @@ export default function Habit() {
                         <img src = {plusImg}/>
                     </Plus>
                 </Create>
-                    {plus ? <FormHabit plus = {plus} setPlus = {setPlus}/> : ""}
+                    {plus ? <FormHabit plus = {plus} setPlus = {setPlus} habit = {habit} setHabit = {setHabit}/> : ""}
                     {teste.length > 0 ? <ListHabits/> :  
                     <Text>
                         Você não tem nenhum hábito cadastrado ainda. 

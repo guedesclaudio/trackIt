@@ -3,13 +3,15 @@ import styled from "styled-components";
 import {postHabit} from "../services/trackit.js"
 import { useContext } from "react";
 import UserContext from "../contexts/userContext.js";
+import { ThreeDots } from "react-loader-spinner";
 
 
 function Days({
     day,
     numberDay,
     selectedDays,
-    setSelectedDays
+    setSelectedDays,
+    acess
 }) {
 
     const [background, setBackground] = useState("#FFFFFF")
@@ -17,12 +19,12 @@ function Days({
 
     function selectDay() {
 
-        if (!selectedDays.includes(numberDay)) {
+        if (!selectedDays.includes(numberDay) && acess) {
             setSelectedDays([...selectedDays, numberDay])
             setBackground("#CFCFCF")
             setColor("#FFFFFF")
         }
-        else {
+        else if (selectedDays.includes(numberDay) && acess){
             selectedDays.splice(selectedDays.indexOf(numberDay), 1)
             setSelectedDays([...selectedDays])
             setBackground("#FFFFFF")
@@ -39,14 +41,22 @@ function Days({
 
 export default function FormHabit({
     plus,
-    setPlus
+    setPlus,
+    habit,
+    setHabit
 }) {
 
+    const dots = <ThreeDots color="#FFFFFF" height={40} width={40}/>
     const {token, callApi, setCallApi, teste, setTeste} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
-    const [habit, setHabit] = useState("")
     const [disabled, setDisabled] = useState("")
     const [opacity, setOpacity] = useState(1)
+    const [load, setLoad] = useState("Salvar")
+    const [acess, setAcess] = useState(true)
+    const [background, setBackground] = useState("#FFFFFF")
+    const [a, setA] = useState("")
+    //const [habit, setHabit] = useState("")
+    console.log(a)
     const nameDays = [
         {day: "D", numberDay: 0, select:false},
         {day: "S", numberDay: 1, select:false},
@@ -71,13 +81,19 @@ export default function FormHabit({
             }
         }
         disabledForm()
+        if (selectedDays.length === 0) {
+            alert("Preencha os campos corretamente")
+            activateForm()
+            return
+        }
         postHabit(userDataForm, config)
         .then(response => {
             console.log(response)
             activateForm()
             setCallApi(!callApi)
             setTeste(!teste)
-            
+            setHabit("")
+            setPlus(!plus)
         })
         .catch(response => {
             if (response.response.status === 422) alert("Preencha os campos corretamente")
@@ -87,12 +103,18 @@ export default function FormHabit({
 
     function disabledForm() {
         setDisabled("disabled")
-        setOpacity(1.8)
+        setOpacity(0.7)
+        setBackground("#F2F2F2")
+        setAcess(false)
+        setLoad(dots)
     }
 
     function activateForm() {
         setDisabled("")
         setOpacity(1.0)
+        setBackground("FFFFFF")
+        setLoad("Salvar")
+        setAcess(true)
     }
 
     function cancelForm() {
@@ -102,22 +124,24 @@ export default function FormHabit({
     
     return (
         <Container>
-            <input type = "text" placeholder = "nome do hábito" required disabled = {disabled} value = {habit} onChange = {event => receiveEvent(event)}/>
-            <DaysDiv>
+            <input type = "text" placeholder = "nome do hábito" required disabled = {disabled} 
+            background = {background} value = {habit} onChange = {event => receiveEvent(event)}/>
+            <DaysDiv opacity = {opacity}>
                 {nameDays.map((value, index) => 
                 <Days 
                 key = {index} 
+                acess = {acess}
                 day = {value.day}
                 numberDay = {value.numberDay}
                 selectedDays = {selectedDays} 
                 setSelectedDays = {setSelectedDays}/>)}
             </DaysDiv>
             <Buttons opacity = {opacity}>
-                <Cancel onClick = {cancelForm}>
+                <Cancel onClick = {cancelForm} disabled = {disabled}>
                     Cancelar
                 </Cancel>
-                <Save onClick = {saveForm}>
-                    Salvar
+                <Save onClick = {saveForm} disabled = {disabled}>
+                    {load}
                 </Save>
             </Buttons>
         </Container>
@@ -138,7 +162,7 @@ const Container = styled.div`
         margin-top: 10px;
         height: 45px;
         width: 303px;
-        background: #FFFFFF;
+        background: ${props => props.color}; //#F2F2F2
         border: 1px solid #D5D5D5;
         border-radius: 5px;
         outline: none;
@@ -159,6 +183,7 @@ const DaysDiv = styled.div`
     justify-content: left;
     align-items: center;
     margin-left: -60px;
+    opacity: ${props => props.opacity};
 `
 
 const DayWeek = styled.div`
@@ -183,7 +208,7 @@ const Buttons = styled.div`
     display: flex;
     justify-content: right;
     align-items: center;
-    filter: brightness(${props => props.opacity});
+    opacity: ${props => props.opacity};
 `
 
 const Cancel = styled.button`

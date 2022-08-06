@@ -32,8 +32,11 @@ export default function Registration() {
         postRegistration(form)
         .then(response => navigate("/"))
         .catch(response => {
-            if (response.status === "409") {
+            if (response.response.status == 409) {
                 alert("Esse nome de usuário já existe")
+            }
+            else if (response.response.status == 422) {
+                alert(`Preencha os campos corretamente! ERROR ${response.response.status}`)
             }
             else {
                 alert(`Ops! Ocorreu um erro inesperado, estamos trabalhando nisso! ERROR ${response.response.status}`)

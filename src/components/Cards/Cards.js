@@ -58,6 +58,9 @@ function Card({
          .catch(response => console.log(response))
     }
 
+    const color = currentSequence > 0 && currentSequence === highestSequence ? "#8FC549" : "#666666"
+    const dayOrDays = currentSequence === 1 && highestSequence === 1 ? "dia" : "dias"
+
     return (
         <Container>
             <Habit>
@@ -65,10 +68,10 @@ function Card({
                     {name} 
                 </Title>
                 <Sequence>
-                    Sequência atual: {currentSequence} {currentSequence === 1 ? "dia" : "dias"}
+                    Sequência atual: <Day color = {color}>{currentSequence} {dayOrDays}</Day> 
                 </Sequence>
                 <Sequence>
-                    Seu recorde: {highestSequence} {highestSequence === 1 ? "dia" : "dias"}
+                    Seu recorde: <Day color = {color}>{highestSequence} {dayOrDays}</Day>
                 </Sequence>
             </Habit>
             <Box background = {background} onClick = {modifyHabit}>
@@ -94,7 +97,7 @@ export default function Cards() {
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)
-            setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+            habitsToday === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
         })
         .catch(response => console.log(response))
     },[callApi, teste])
@@ -123,6 +126,7 @@ const Container = styled.div`
 
 const Habit = styled.div`
     margin-left: 10px;
+    width: 200px;
 `
 
 const Title = styled.h1`
@@ -153,4 +157,9 @@ const Box = styled.div`
     justify-content: center;
     align-items: center;
     margin-right: 10px;
+`
+
+const Day = styled.span`
+    font-size: 12px;
+    color: ${props => props.color}
 `

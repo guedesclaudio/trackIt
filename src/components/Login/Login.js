@@ -52,12 +52,12 @@ export default function Login() {
             setLoad("Entrar")
             setDisabled("")
             setBackground("#FFFFFF")
-            resetForm()
             alert(`Informe o email e senha corretamente. ERROR ${response.response.status}`)
         })
     }
 
     function resetForm() {
+        console.log(form) //tirar essa funcao
         setForm({})
     }
 

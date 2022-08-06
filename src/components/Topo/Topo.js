@@ -25,7 +25,7 @@ const Container = styled.div`
     background: #126BA5;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     top: 0;
@@ -39,10 +39,12 @@ const Title = styled.h1`
     font-size: 38px;
     line-height: 49px;
     color: #FFFFFF;
+    margin-left: 10px;
 `
 
 const ImgPerfil = styled.img`
     height: 51px;
     width: 51px;
     border-radius: 98px;
+    margin-right: 10px;
 `
