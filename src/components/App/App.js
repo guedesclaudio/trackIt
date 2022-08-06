@@ -8,6 +8,7 @@ import History from "../History/History.js"
 import Registration from "../Registration/Registration.js"
 import UserContext from "../contexts/userContext.js";
 import "../reset.css"
+import PrivateRoute from "../PrivateRoute/PrivateRoute.js";
 
 
 export default function App() {
@@ -28,9 +29,21 @@ export default function App() {
                 <Routes>
                     <Route path="/" element = {<Login/>}/>
                     <Route path="/cadastro" element = {<Registration/>}/>
-                    <Route path="/hoje" element = {<Today/>}/>
-                    <Route path="/habitos" element = {<Habit/>}/>
-                    <Route path="/historico" element = {<History/>}/>
+                    <Route path="/hoje" element = {
+                        <PrivateRoute>
+                            <Today/>
+                        </PrivateRoute>
+                    }/>
+                    <Route path="/habitos" element = {
+                        <PrivateRoute>
+                            <Habit/>
+                        </PrivateRoute>
+                    }/>
+                    <Route path="/historico" element = {
+                        <PrivateRoute>
+                            <History/>
+                        </PrivateRoute>
+                    }/>
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
