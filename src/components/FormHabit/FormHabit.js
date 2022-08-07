@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import {postHabit} from "../services/trackit.js"
 import { useContext } from "react";
 import UserContext from "../contexts/userContext.js";
 import { ThreeDots } from "react-loader-spinner";
+import {getHabitsToday} from "../services/trackit.js"
 
 
 function Days({
@@ -47,7 +48,7 @@ export default function FormHabit({
 }) {
 
     const dots = <ThreeDots color="#FFFFFF" height={40} width={40}/>
-    const {callApi, setCallApi, teste, setTeste, userData} = useContext(UserContext)
+    const {callApi, setCallApi, teste, setTeste, userData, setPorcentage, porcentage, habitsToday, setHabitsToday} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
     const [disabled, setDisabled] = useState("")
     const [opacity, setOpacity] = useState(1)
@@ -70,6 +71,7 @@ export default function FormHabit({
     }
 
     function saveForm() {
+        setTeste(!teste)
         const userDataForm = {
             name: habit,
             days: selectedDays
@@ -98,6 +100,21 @@ export default function FormHabit({
             activateForm()
         })
     }
+
+    useEffect(() => { //nao é aqui
+        console.log("chamou aqui no effect")
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${userData.token}`
+            }
+        }
+        getHabitsToday(config)
+        .then(response => {
+            setHabitsToday(response.data)
+            habitsToday.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+        })
+        .catch(response => console.log(response))
+    },[callApi, teste])
 
     function disabledForm() {
         setDisabled("disabled")

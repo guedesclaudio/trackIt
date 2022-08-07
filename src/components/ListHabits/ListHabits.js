@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {useEffect, useState} from "react"
 import { useContext } from "react";
 import UserContext from "../contexts/userContext.js";
-import {getHabits} from "../services/trackit.js"
+import {getHabits, getHabitsToday} from "../services/trackit.js"
 import { deleteHabit } from "../services/trackit.js";
 import trash from "./trash.png"
 
@@ -12,7 +12,12 @@ function Habit({
     id,
     userData,
     callApi,
-    setCallApi
+    setCallApi,
+    habitsToday,
+    setHabitsToday,
+    teste,
+    setTeste,
+    setPorcentage
 }) {
 
     const nameDays = [
@@ -44,6 +49,7 @@ function Habit({
     
     
     function undoHabit() {
+        setTeste(!teste)
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`
@@ -57,6 +63,21 @@ function Habit({
             .catch(response => console.log(response))
         }
     }
+
+    useEffect(() => { //nao é aqui
+        console.log("chamou aqui no effect")
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${userData.token}`
+            }
+        }
+        getHabitsToday(config)
+        .then(response => {
+            setHabitsToday(response.data)
+            habitsToday.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+        })
+        .catch(response => console.log(response))
+    },[callApi, teste])
 
     return (
         <Card>
@@ -76,7 +97,7 @@ function Habit({
 
 export default function ListHabits() {
 
-    const {callApi, setCallApi, userData} = useContext(UserContext)
+    const {callApi, setCallApi, userData, habitsToday, setHabitsToday, teste, setTeste, setPorcentage} = useContext(UserContext)
     const [data, setData] = useState([])
 
     useEffect(() => {
@@ -93,7 +114,7 @@ export default function ListHabits() {
     return (
         <>
             {data.map((value, index) => <Habit key = {index} days = {value.days} name = {value.name} id = {value.id} userData = {userData} callApi = {callApi}
-            setCallApi = {setCallApi}/>)}
+            setCallApi = {setCallApi} habitsToday = {habitsToday} setHabitsToday = {setHabitsToday} teste = {teste} setTeste = {setTeste} setPorcentage = {setPorcentage}/>)}
         </>
     )
 }

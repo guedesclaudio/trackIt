@@ -17,6 +17,7 @@ export default function App() {
     const [callApi, setCallApi] = useState(false)
     const [porcentage, setPorcentage] = useState(0)
     const [teste, setTeste] = useState(false)
+    const [habitsToday, setHabitsToday] = useState([])
 
 
     return (
@@ -24,7 +25,8 @@ export default function App() {
         value = {{callApi, setCallApi, 
         porcentage, setPorcentage, 
         teste, setTeste,
-        userData, setUserData}}>
+        userData, setUserData,
+        habitsToday, setHabitsToday}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element = {<Login/>}/>
