@@ -9,9 +9,8 @@ import { getHabitsToday } from "../services/trackit.js";
 
 
 export default function Today() {
-    const {porcentage, setPorcentage, userData, habitsToday, setHabitsToday, teste, callApi, setTeste} = useContext(UserContext)
+    const {porcentage, setPorcentage, userData, habitsToday, setHabitsToday, teste, callApi} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
-    //const [porcentage, setPorcentage] = useState(0)
     const serializedUserData = JSON.stringify(userData) //localstorage
     localStorage.setItem(`${userData.name}`, serializedUserData) //localstorage
     localStorage.getItem(`${userData.name}`, JSON.parse(serializedUserData))
@@ -24,7 +23,6 @@ export default function Today() {
                 break;
             case 1 :
                 setNameDay("Segunda")
-                //setTeste(!teste)
                 break
             case 2 :
                 setNameDay("Terça")
@@ -47,8 +45,6 @@ export default function Today() {
     })
 
     useEffect(() => { 
-        console.log("chamou aqui no effect today")
-        console.log(porcentage, habitsToday)
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`

@@ -1,12 +1,11 @@
-import React from "react";
-import Logo from "../Logo/Logo.js"
 import {Link, useNavigate} from "react-router-dom"
-import {useState} from "react"
+import {useState, useContext} from "react"
 import {postLogin} from "../services/trackit.js"
-import styled from "styled-components";
-import { useContext } from "react";
-import UserContext from "../contexts/userContext.js";
 import { ThreeDots } from "react-loader-spinner";
+//import React from "react";
+import Logo from "../Logo/Logo.js"
+import styled from "styled-components";
+import UserContext from "../contexts/userContext.js";
 
 
 export default function Login() {

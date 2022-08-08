@@ -1,10 +1,11 @@
-import Logo from "../Logo/Logo.js"
 import {useState} from "react"
 import {postRegistration} from "../services/trackit.js"
-import styled from "styled-components";
 import {Link} from "react-router-dom"
-import { useNavigate } from "react-router-dom";
-import { ThreeDots } from "react-loader-spinner";
+import {useNavigate} from "react-router-dom";
+import {ThreeDots} from "react-loader-spinner";
+import styled from "styled-components";
+import Logo from "../Logo/Logo.js"
+
 
 export default function Registration() {
 

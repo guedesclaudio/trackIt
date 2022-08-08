@@ -7,7 +7,6 @@ export default function Logo() {
         <Container>
             <img src = {logo}/>
         </Container>
-        
     )
 }
 

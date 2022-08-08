@@ -1,9 +1,7 @@
+import {getHabits, getHabitsToday, deleteHabit} from "../services/trackit.js"
+import {useEffect, useState, useContext} from "react"
 import styled from "styled-components";
-import {useEffect, useState} from "react"
-import { useContext } from "react";
 import UserContext from "../contexts/userContext.js";
-import {getHabits, getHabitsToday} from "../services/trackit.js"
-import { deleteHabit } from "../services/trackit.js";
 import trash from "./trash.png"
 
 function Habit({
@@ -64,8 +62,7 @@ function Habit({
         }
     }
 
-    useEffect(() => { //nao é aqui
-        console.log("chamou aqui no effect")
+    useEffect(() => { 
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`

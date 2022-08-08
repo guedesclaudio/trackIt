@@ -101,8 +101,7 @@ export default function FormHabit({
         })
     }
 
-    useEffect(() => { //nao é aqui
-        console.log("chamou aqui no effect")
+    useEffect(() => { 
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`
@@ -177,7 +176,7 @@ const Container = styled.div`
         margin-top: 10px;
         height: 45px;
         width: 303px;
-        background: ${props => props.color}; //#F2F2F2
+        background: ${props => props.color}; 
         border: 1px solid #D5D5D5;
         border-radius: 5px;
         outline: none;

@@ -1,11 +1,10 @@
+import { useState, useEffect, useContext } from "react";
+import { getHabits } from "../services/trackit.js";
 import styled from "styled-components";
 import Topo from "../Topo/Topo.js";
 import Footer from "../Footer/Footer.js";
 import FormHabit from "../FormHabit/FormHabit.js";
 import ListHabits from "../ListHabits/ListHabits.js"
-import { useState, useEffect } from "react";
-import { useContext } from "react";
-import { getHabits } from "../services/trackit.js";
 import UserContext from "../contexts/userContext.js";
 import plusImg from "./plus.png"
 
@@ -16,7 +15,7 @@ export default function Habit() {
     const [teste, setTeste] = useState([])//
     const [habit, setHabit] = useState("")
 
-    useEffect(() => { //so pra testar, nao é o lugar dela aqui , tirar as variaveis que nao for usar mais
+    useEffect(() => { 
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`

@@ -7,7 +7,9 @@ import styled from "styled-components";
 
 
 export default function Footer() {
+
     const {porcentage} = useContext(UserContext)
+
     return (
         <Container>
             <Link to = {"/habitos"}>
@@ -83,7 +85,7 @@ const Circle = styled.div`
     height: 81px;
 `
 
-const TextLoad = styled.h1` // refatorar aqui fazendo herança de styled components
+const TextLoad = styled.h1` 
     font-family: "Lexend Deca";
     font-size: 18px;
     font-weight: 400;

@@ -25,7 +25,7 @@ const Container = styled.div`
 `
 
 const Title = styled.h1`
-    font-family: Lexend Deca;
+    font-family: "Lexend Deca";
     font-size: 23px;
     font-weight: 400;
     line-height: 29px;

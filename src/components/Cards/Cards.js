@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { getHabitsToday, postHabitDone, postCancelHabitDone } from "../services/trackit.js";
 import UserContext from "../contexts/userContext.js";
-//import { useContext } from "react";
 import select from "./select.png"
 import styled from "styled-components";
 
@@ -44,7 +43,10 @@ function Card({
          .then(response => {
             setCallApi(!callApi)
          })
-         .catch(response => console.log(response))
+         .catch(response => {
+            alert("Ops! Ocorreu um erro inesperado. Estamos trabalhando nisso pra te ajudar")
+            console.log(response)
+        })
     }
 
     function uncheckHabit(config) {
@@ -53,7 +55,10 @@ function Card({
          .then(response => {
             setCallApi(!callApi)
          })
-         .catch(response => console.log(response))
+         .catch(response => {
+            alert("Ops! Ocorreu um erro inesperado. Estamos trabalhando nisso pra te ajudar")
+            console.log(response)
+        })
     }
 
     const color = currentSequence > 0 && currentSequence === highestSequence ? "#8FC549" : "#666666"
@@ -81,13 +86,10 @@ function Card({
 
 export default function Cards() {
 
-    const {porcentage, setPorcentage, teste, userData, habitsToday, setHabitsToday} = useContext(UserContext)
-    //const [habitsToday, setHabitsToday] = useState([])
+    const {setPorcentage, teste, userData, habitsToday, setHabitsToday} = useContext(UserContext)
     const [callApi, setCallApi] = useState(false)
     
-
     useEffect(() => { 
-        console.log("chamou aqui no effect")
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`
