@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getHabitsToday, postHabitDone, postCancelHabitDone } from "../services/trackit.js";
 import UserContext from "../contexts/userContext.js";
-import { useContext } from "react";
+//import { useContext } from "react";
 import select from "./select.png"
+import styled from "styled-components";
 
 
 function Card({
@@ -86,7 +86,7 @@ export default function Cards() {
     const [callApi, setCallApi] = useState(false)
     
 
-    useEffect(() => {
+    useEffect(() => { 
         console.log("chamou aqui no effect")
         const config = {
             headers: {
@@ -96,7 +96,7 @@ export default function Cards() {
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)
-            habitsToday.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+            response.data.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
         })
         .catch(response => console.log(response))
     },[callApi, teste])

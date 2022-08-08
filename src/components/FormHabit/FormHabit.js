@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
 import {postHabit} from "../services/trackit.js"
 import { useContext } from "react";
 import UserContext from "../contexts/userContext.js";
 import { ThreeDots } from "react-loader-spinner";
 import {getHabitsToday} from "../services/trackit.js"
+import styled from "styled-components";
 
 
 function Days({
@@ -111,7 +111,7 @@ export default function FormHabit({
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)
-            habitsToday.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+            response.data.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
         })
         .catch(response => console.log(response))
     },[callApi, teste])

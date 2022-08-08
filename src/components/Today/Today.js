@@ -5,10 +5,11 @@ import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/userContext.js";
 import dayjs from "dayjs";
+import { getHabitsToday } from "../services/trackit.js";
 
 
 export default function Today() {
-    const {porcentage, setPorcentage, userData} = useContext(UserContext)
+    const {porcentage, setPorcentage, userData, habitsToday, setHabitsToday, teste, callApi, setTeste} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
     //const [porcentage, setPorcentage] = useState(0)
     const serializedUserData = JSON.stringify(userData) //localstorage
@@ -23,6 +24,7 @@ export default function Today() {
                 break;
             case 1 :
                 setNameDay("Segunda")
+                //setTeste(!teste)
                 break
             case 2 :
                 setNameDay("Terça")
@@ -43,6 +45,22 @@ export default function Today() {
                 break;
         }
     })
+
+    useEffect(() => { 
+        console.log("chamou aqui no effect today")
+        console.log(porcentage, habitsToday)
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${userData.token}`
+            }
+        }
+        getHabitsToday(config)
+        .then(response => {
+            setHabitsToday(response.data)
+            response.data.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+        })
+        .catch(response => console.log(response))
+    },[callApi, teste])
     
     return (
         <>
@@ -67,7 +85,7 @@ const Container = styled.div`
 `
 
 const TextDate = styled.h1`
-    font-family: Lexend Deca;
+    font-family: "Lexend Deca";
     font-size: 23px;
     font-weight: 400;
     line-height: 29px;

@@ -1,9 +1,10 @@
-import styled from "styled-components";
 import {Link} from "react-router-dom"
-import { CircularProgressbar } from "react-circular-progressbar";
-import 'react-circular-progressbar/dist/styles.css';
-import { useContext } from "react";
+import {CircularProgressbar} from "react-circular-progressbar";
+import {useContext} from "react";
 import UserContext from "../contexts/userContext";
+import 'react-circular-progressbar/dist/styles.css';
+import styled from "styled-components";
+
 
 export default function Footer() {
     const {porcentage} = useContext(UserContext)

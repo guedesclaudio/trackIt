@@ -1,14 +1,15 @@
-import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { useState } from "react";
+import { useState } from "react"
+import React from "react"
 import Login from "../Login/Login.js"
-import Today from "../Today/Today.js";
+import Today from "../Today/Today.js"
 import Habit from "../Habit/Habit.js"
 import History from "../History/History.js"
 import Registration from "../Registration/Registration.js"
-import UserContext from "../contexts/userContext.js";
+import UserContext from "../contexts/userContext.js"
+import PrivateRoute from "../PrivateRoute/PrivateRoute.js"
 import "../reset.css"
-import PrivateRoute from "../PrivateRoute/PrivateRoute.js";
+
 
 
 export default function App() {
