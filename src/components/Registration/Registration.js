@@ -11,7 +11,7 @@ export default function Registration() {
 
     const [form, setForm] = useState({})
     const dots = <ThreeDots color="#FFFFFF" height={80} width={80}/>
-    const [load, setLoad] = useState("Entrar")
+    const [load, setLoad] = useState("Cadastrar")
     const [opacity, setOpacity] = useState(1)
     const [disabled, setDisabled] = useState("")
     const [background, setBackground] = useState("#FFFFFF")
@@ -43,14 +43,14 @@ export default function Registration() {
                 alert(`Ops! Ocorreu um erro inesperado, estamos trabalhando nisso! ERROR ${response.response.status}`)
             }
             setOpacity(1)
-            setLoad("Entrar")
+            setLoad("Cadastrar")
             setDisabled("")
             setBackground("#FFFFFF")
         })
     }
 
     return (
-        <>
+        <Page>
             <Logo/>
             <Container>
                 <form onSubmit = {sendUserRegistration}>
@@ -68,10 +68,15 @@ export default function Registration() {
                     <Text>Já tem uma conta? Faça login!</Text>  
                 </Link>
             </Container>
-        </>
+        </Page>
     )
 }
 
+const Page = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-color: #FFFFFF;
+`
 
 const Container = styled.div`
     width: 303px;
@@ -101,7 +106,7 @@ const Input = styled.input`
 
 const Button = styled.button`
     height: 45px;
-    width: 303px;
+    width: 308px;
     border-radius: 5px;
     background: #52B6FF;
     border: none;

@@ -1,11 +1,11 @@
+import { useContext, useEffect, useState } from "react";
+import { getHabitsToday } from "../services/trackit.js";
 import Topo from "../Topo/Topo.js";
 import Cards from "../Cards/Cards.js";
 import Footer from "../Footer/Footer.js";
 import styled from "styled-components";
-import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/userContext.js";
 import dayjs from "dayjs";
-import { getHabitsToday } from "../services/trackit.js";
 
 
 export default function Today() {
@@ -59,21 +59,24 @@ export default function Today() {
     },[callApi, teste])
     
     return (
-        <>
-        <Topo/>
-        <Container>
-            <TextDate>
-                {`${nameDay} ${dayjs().date()}/${dayjs().month()}`}
-            </TextDate>
-            <Warning>
-                {porcentage ? <Porcentage>{(Math.round(porcentage*100)) + "% dos hábitos concluídos"}</Porcentage> : "Nenhum hábito concluído ainda"}
-            </Warning>
-            <Cards />
-        </Container>
-        <Footer />
-        </>
+        <Page>
+            <Topo/>
+            <Container>
+                <TextDate>
+                    {`${nameDay} ${dayjs().date()}/${dayjs().month()}`}
+                </TextDate>
+                <Warning>
+                    {porcentage ? <Porcentage>{(Math.round(porcentage*100)) + "% dos hábitos concluídos"}</Porcentage> : "Nenhum hábito concluído ainda"}
+                </Warning>
+                <Cards />
+            </Container>
+            <Footer />
+        </Page>
     )
 }
+
+const Page = styled.div`
+`
 
 const Container = styled.div`
     margin-top: 80px;

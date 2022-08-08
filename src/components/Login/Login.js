@@ -2,7 +2,6 @@ import {Link, useNavigate} from "react-router-dom"
 import {useState, useContext} from "react"
 import {postLogin} from "../services/trackit.js"
 import { ThreeDots } from "react-loader-spinner";
-//import React from "react";
 import Logo from "../Logo/Logo.js"
 import styled from "styled-components";
 import UserContext from "../contexts/userContext.js";
@@ -61,7 +60,7 @@ export default function Login() {
     }
 
     return (
-        <>
+        <Page>
             <Logo/> 
             <Container>
                 <form onSubmit = {sendUserLogin}>
@@ -75,10 +74,16 @@ export default function Login() {
                     <Text>Não tem uma conta? Cadastre-se!</Text>
                 </Link>
             </Container>
-        </>
+        </Page>
     )
 }
 
+const Page = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-color: #FFFFFF;
+    /*padding-top: 60px;*/
+`
 
 const Container = styled.div`
     width: 303px;
@@ -108,7 +113,7 @@ const Input = styled.input`
 
 const Button = styled.button`
     height: 45px;
-    width: 303px;
+    width: 308px;
     border-radius: 5px;
     background: #52B6FF;
     border: none;
