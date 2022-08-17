@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { useState } from "react"
 import React from "react"
 import Login from "../Login/Login.js"
@@ -13,13 +13,16 @@ import "../reset.css"
 
 export default function App() {
 
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState(
+        localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null
+    )
     const [callApi, setCallApi] = useState(false)
     const [porcentage, setPorcentage] = useState(0)
     const [teste, setTeste] = useState(false)
     const [habitsToday, setHabitsToday] = useState([])
-    const [config, setConfig] = useState({})
-
+    const [config, setConfig] = useState(
+        localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null
+    )
 
     return (
         <UserContext.Provider 

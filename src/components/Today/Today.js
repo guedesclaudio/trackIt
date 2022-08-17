@@ -10,11 +10,8 @@ import dayjs from "dayjs";
 
 
 export default function Today() {
-    const {porcentage, setPorcentage, userData, habitsToday, setHabitsToday, teste, callApi, config} = useContext(UserContext)
+    const {porcentage, setPorcentage, userData, setHabitsToday, teste, callApi, config} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
-    const serializedUserData = JSON.stringify(userData) 
-    localStorage.setItem(`${userData.name}`, serializedUserData) 
-    localStorage.getItem(`${userData.name}`, JSON.parse(serializedUserData))
     const dayWeek = dayjs().day()
 
     useEffect(() => {

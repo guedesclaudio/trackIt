@@ -14,6 +14,7 @@
 <br>
   
 # Funcionalidades
+- Tela com foco principal para mobile
 - Login e cadastro de usuário
 - Conexão com a API utilizando axios, e acesso através do token de usuário
 - Criação e exclusão dos hábitos

@@ -16,7 +16,7 @@ export default function Login() {
     const [background, setBackground] = useState("#FFFFFF")
     const [opacity, setOpacity] = useState(1)
     const [form, setForm] = useState({})
-    const {userData, setUserData, setConfig} = useContext(UserContext)
+    const {userData, setUserData, setConfig, config} = useContext(UserContext)
     const navigate = useNavigate()
 
     
@@ -32,15 +32,21 @@ export default function Login() {
         disabledForm()
         postLogin(form)
         .then(response => {
+            localStorage.setItem("user", JSON.stringify({
+                name: response.data.name, 
+                token: response.data.token,
+                image: response.data.image,
+                email: response.data.email,
+            }))
             setUserData({...userData,
                 name: response.data.name, 
                 token: response.data.token,
                 image: response.data.image,
                 email: response.data.email,
             })
-            setConfig({
+            setConfig({...config,
                 headers: {
-                    "Authorization": `Bearer ${response.data.token}`
+                    "Authorization": `Bearer ${userData.token}`
                 }
             })
             navigate("/hoje")
