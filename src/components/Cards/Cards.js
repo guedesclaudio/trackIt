@@ -23,7 +23,6 @@ function Card({
     }, [])
 
     function modifyHabit() {
-
         const config = {
             headers: {
                 "Authorization": `Bearer ${userData.token}`

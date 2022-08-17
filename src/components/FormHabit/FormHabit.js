@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import {postHabit} from "../services/trackit.js"
-import { useContext } from "react";
-import UserContext from "../contexts/userContext.js";
-import { ThreeDots } from "react-loader-spinner";
+import {useContext} from "react";
+import {ThreeDots} from "react-loader-spinner";
 import {getHabitsToday} from "../services/trackit.js"
+import UserContext from "../contexts/userContext.js";
 import styled from "styled-components";
 
 
@@ -48,7 +48,7 @@ export default function FormHabit({
 }) {
 
     const dots = <ThreeDots color="#FFFFFF" height={40} width={40}/>
-    const {callApi, setCallApi, teste, setTeste, setPorcentage, porcentage, habitsToday, setHabitsToday, config} = useContext(UserContext)
+    const {callApi, setCallApi, teste, setTeste, setPorcentage, setHabitsToday, config} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
     const [disabled, setDisabled] = useState("")
     const [opacity, setOpacity] = useState(1)
