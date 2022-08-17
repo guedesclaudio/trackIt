@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { getHabitsToday } from "../services/trackit.js";
+import {Container} from "../commom styles/allScreens.js"
 import Topo from "../Topo/Topo.js";
 import Cards from "../Cards/Cards.js";
 import Footer from "../Footer/Footer.js";
@@ -9,10 +10,10 @@ import dayjs from "dayjs";
 
 
 export default function Today() {
-    const {porcentage, setPorcentage, userData, habitsToday, setHabitsToday, teste, callApi} = useContext(UserContext)
+    const {porcentage, setPorcentage, userData, habitsToday, setHabitsToday, teste, callApi, config} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
-    const serializedUserData = JSON.stringify(userData) //localstorage
-    localStorage.setItem(`${userData.name}`, serializedUserData) //localstorage
+    const serializedUserData = JSON.stringify(userData) 
+    localStorage.setItem(`${userData.name}`, serializedUserData) 
     localStorage.getItem(`${userData.name}`, JSON.parse(serializedUserData))
     const dayWeek = dayjs().day()
 
@@ -42,14 +43,9 @@ export default function Today() {
             default:
                 break;
         }
-    })
+    }, [])
 
     useEffect(() => { 
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)
@@ -78,11 +74,6 @@ export default function Today() {
 const Page = styled.div`
 `
 
-const Container = styled.div`
-    margin-top: 80px;
-    margin-bottom: 140px;
-`
-
 const TextDate = styled.h1`
     font-family: "Lexend Deca";
     font-size: 23px;
@@ -103,11 +94,7 @@ const Warning = styled.h2`
     margin-left: 10px;
 `
 
-const Porcentage = styled.h2`
-    font-family: "Lexend Deca";
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 22px;
-    text-align: left;
+const Porcentage = styled(Warning)`
     color: #8FC549;
+    margin-left: 0;
 `

@@ -1,3 +1,4 @@
+import {Container} from "../commom styles/allScreens.js"
 import styled from "styled-components";
 import Topo from "../Topo/Topo";
 import Footer from "../Footer/Footer";
@@ -18,11 +19,6 @@ export default function History() {
         </>
     )
 }
-
-const Container = styled.div`
-    margin-top: 90px;
-    margin-bottom: 140px;
-`
 
 const Title = styled.h1`
     font-family: "Lexend Deca";

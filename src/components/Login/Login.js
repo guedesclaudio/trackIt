@@ -1,6 +1,7 @@
 import {Link, useNavigate} from "react-router-dom"
 import {useState, useContext} from "react"
 import {postLogin} from "../services/trackit.js"
+import {Page, Container, Text} from "../commom styles/loginAndRegistration.js"
 import { ThreeDots } from "react-loader-spinner";
 import Logo from "../Logo/Logo.js"
 import styled from "styled-components";
@@ -15,7 +16,7 @@ export default function Login() {
     const [background, setBackground] = useState("#FFFFFF")
     const [opacity, setOpacity] = useState(1)
     const [form, setForm] = useState({})
-    const {userData, setUserData} = useContext(UserContext)
+    const {userData, setUserData, setConfig} = useContext(UserContext)
     const navigate = useNavigate()
 
     
@@ -35,8 +36,13 @@ export default function Login() {
                 name: response.data.name, 
                 token: response.data.token,
                 image: response.data.image,
-                email: response.data.email
-            }) 
+                email: response.data.email,
+            })
+            setConfig({
+                headers: {
+                    "Authorization": `Bearer ${response.data.token}`
+                }
+            })
             navigate("/hoje")
         }) 
         .catch(response => {
@@ -78,18 +84,6 @@ export default function Login() {
     )
 }
 
-const Page = styled.div`
-    height: 100vh;
-    width: 100vw;
-    background-color: #FFFFFF;
-    /*padding-top: 60px;*/
-`
-
-const Container = styled.div`
-    width: 303px;
-    margin: 0 auto;
-`
-
 const Input = styled.input`
     height: 45px;
     width: 303px;
@@ -126,15 +120,4 @@ const Button = styled.button`
     justify-content: center;
     align-items: center;
     opacity: ${props => props.opacity};
-`
-
-const Text = styled.h1`
-    margin-top: 20px;
-    text-align: center;
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    color: #52B6FF;
-    text-decoration-line: underline;
 `

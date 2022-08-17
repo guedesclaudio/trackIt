@@ -11,7 +11,6 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute.js"
 import "../reset.css"
 
 
-
 export default function App() {
 
     const [userData, setUserData] = useState({})
@@ -19,6 +18,7 @@ export default function App() {
     const [porcentage, setPorcentage] = useState(0)
     const [teste, setTeste] = useState(false)
     const [habitsToday, setHabitsToday] = useState([])
+    const [config, setConfig] = useState({})
 
 
     return (
@@ -27,7 +27,8 @@ export default function App() {
         porcentage, setPorcentage, 
         teste, setTeste,
         userData, setUserData,
-        habitsToday, setHabitsToday}}>
+        habitsToday, setHabitsToday,
+        config, setConfig}}>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element = {<Login/>}/>

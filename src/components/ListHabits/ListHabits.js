@@ -8,14 +8,13 @@ function Habit({
     days,
     name,
     id,
-    userData,
     callApi,
     setCallApi,
-    habitsToday,
     setHabitsToday,
     teste,
     setTeste,
-    setPorcentage
+    setPorcentage,
+    config
 }) {
 
     const nameDays = [
@@ -27,7 +26,7 @@ function Habit({
         {day: "S", numberDay: 5},
         {day: "S", numberDay: 6},
     ]
-
+    
     const nameDays2 = [
         {day: "D", numberDay: 0, background: days.includes(nameDays[0].numberDay)? "#CFCFCF":"#FFFFFF", 
         color: days.includes(nameDays[0].numberDay)? "#FFFFFF":"#DBDBDB"},
@@ -44,15 +43,20 @@ function Habit({
         {day: "S", numberDay: 6, background: days.includes(nameDays[6].numberDay)? "#CFCFCF":"#FFFFFF", 
         color: days.includes(nameDays[6].numberDay)? "#FFFFFF":"#DBDBDB"},
     ]
-    
+    /*
+    const [nameDays2, setNameDays2] = useState([])
+    useEffect(() => {
+        setNameDays2(nameDays.map((value, index) => {
+            return [
+                ...nameDays2, {day: value.day, numberDay: value.numberDay, 
+                background: days.includes(nameDays[index].numberDay)? "#CFCFCF":"#FFFFFF", 
+                color: days.includes(nameDays[index].numberDay)? "#FFFFFF":"#DBDBDB"}
+            ]
+        }))
+    })*/
     
     function undoHabit() {
         setTeste(!teste)
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         if (window.confirm("Tem certeza disso?") === true ) {
             deleteHabit(id, config)
             .then(response => {
@@ -63,15 +67,11 @@ function Habit({
     }
 
     useEffect(() => { 
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)
-            response.data.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+            response.data.length === 0 ? 
+            setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
         })
         .catch(response => console.log(response))
     },[callApi, teste])
@@ -83,7 +83,7 @@ function Habit({
                     {name}
                 </Title>
                 <DaysDiv>
-                    {nameDays2.map((value, index) => <DayWeek key = {index} background = {value.background} color = {value.color}>{value.day}</DayWeek>)}
+                    {nameDays2.length > 0 ? nameDays2.map((value, index) => <DayWeek key = {index} background = {value.background} color = {value.color}>{value.day}</DayWeek>): ""}
                 </DaysDiv>
             </div>
             <img src = {trash} onClick = {undoHabit}/>
@@ -94,15 +94,10 @@ function Habit({
 
 export default function ListHabits() {
 
-    const {callApi, setCallApi, userData, habitsToday, setHabitsToday, teste, setTeste, setPorcentage} = useContext(UserContext)
+    const {callApi, setCallApi, userData, habitsToday, setHabitsToday, teste, setTeste, setPorcentage, config} = useContext(UserContext)
     const [data, setData] = useState([])
 
     useEffect(() => {
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         getHabits(config)
         .then(response => setData(response.data))
         .catch(response => console.log(response))
@@ -110,8 +105,10 @@ export default function ListHabits() {
 
     return (
         <>
-            {data.map((value, index) => <Habit key = {index} days = {value.days} name = {value.name} id = {value.id} userData = {userData} callApi = {callApi}
-            setCallApi = {setCallApi} habitsToday = {habitsToday} setHabitsToday = {setHabitsToday} teste = {teste} setTeste = {setTeste} setPorcentage = {setPorcentage}/>)}
+            {data.map((value, index) => <Habit key = {index} days = {value.days} name = {value.name} 
+            id = {value.id} userData = {userData} callApi = {callApi} setCallApi = {setCallApi} 
+            habitsToday = {habitsToday} setHabitsToday = {setHabitsToday} 
+            teste = {teste} setTeste = {setTeste} setPorcentage = {setPorcentage} config = {config}/>)}
         </>
     )
 }

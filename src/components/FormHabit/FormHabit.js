@@ -48,7 +48,7 @@ export default function FormHabit({
 }) {
 
     const dots = <ThreeDots color="#FFFFFF" height={40} width={40}/>
-    const {callApi, setCallApi, teste, setTeste, userData, setPorcentage, porcentage, habitsToday, setHabitsToday} = useContext(UserContext)
+    const {callApi, setCallApi, teste, setTeste, setPorcentage, porcentage, habitsToday, setHabitsToday, config} = useContext(UserContext)
     const [selectedDays, setSelectedDays] = useState([])
     const [disabled, setDisabled] = useState("")
     const [opacity, setOpacity] = useState(1)
@@ -76,11 +76,6 @@ export default function FormHabit({
             name: habit,
             days: selectedDays
         }
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         disabledForm()
         if (selectedDays.length === 0) {
             alert("Preencha os campos corretamente")
@@ -102,15 +97,11 @@ export default function FormHabit({
     }
 
     useEffect(() => { 
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)
-            response.data.length === 0 ? setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
+            response.data.length === 0 ? 
+            setPorcentage(0) : setPorcentage(response.data.filter(value => value.done === true).length/response.data.length)
         })
         .catch(response => console.log(response))
     },[callApi, teste])
@@ -142,13 +133,8 @@ export default function FormHabit({
             background = {background} value = {habit} onChange = {event => receiveEvent(event)}/>
             <DaysDiv opacity = {opacity}>
                 {nameDays.map((value, index) => 
-                <Days 
-                key = {index} 
-                acess = {acess}
-                day = {value.day}
-                numberDay = {value.numberDay}
-                selectedDays = {selectedDays} 
-                setSelectedDays = {setSelectedDays}/>)}
+                <Days key = {index} acess = {acess} day = {value.day}
+                numberDay = {value.numberDay} selectedDays = {selectedDays} setSelectedDays = {setSelectedDays}/>)}
             </DaysDiv>
             <Buttons opacity = {opacity}>
                 <Cancel onClick = {cancelForm} disabled = {disabled}>
@@ -191,7 +177,6 @@ const Container = styled.div`
         color: #DBDBDB;
     }
 `
-
 const DaysDiv = styled.div`
     display: flex;
     justify-content: left;
@@ -199,7 +184,6 @@ const DaysDiv = styled.div`
     margin-left: -60px;
     opacity: ${props => props.opacity};
 `
-
 const DayWeek = styled.div`
     height: 30px;
     width: 30px;
@@ -216,7 +200,6 @@ const DayWeek = styled.div`
     line-height: 25px;
     color: ${props => props.color};
 `
-
 const Buttons = styled.div`
     width: 100%;
     display: flex;
@@ -224,7 +207,6 @@ const Buttons = styled.div`
     align-items: center;
     opacity: ${props => props.opacity};
 `
-
 const Cancel = styled.button`
     height: 20px;
     width: 69px;
@@ -240,20 +222,11 @@ const Cancel = styled.button`
     border: none;
     margin: 25px 10px 0 0;
 `
-
-const Save = styled.button`
+const Save = styled(Cancel)`
     height: 35px;
     width: 84px;
     background-color: #52B6FF;
-    font-family: 'Lexend Deca';
-    font-weight: 400;
-    font-size: 15.976px;
-    line-height: 20px;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     border: none;
     color: #FFFFFF;
-    margin: 25px 10px 0 0;
 `

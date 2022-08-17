@@ -86,15 +86,10 @@ function Card({
 
 export default function Cards() {
 
-    const {setPorcentage, teste, userData, habitsToday, setHabitsToday} = useContext(UserContext)
+    const {setPorcentage, teste, userData, habitsToday, setHabitsToday, config} = useContext(UserContext)
     const [callApi, setCallApi] = useState(false)
     
     useEffect(() => { 
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)

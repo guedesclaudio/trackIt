@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { getHabits } from "../services/trackit.js";
+import {Container} from "../commom styles/allScreens.js"
 import styled from "styled-components";
 import Topo from "../Topo/Topo.js";
 import Footer from "../Footer/Footer.js";
@@ -10,20 +11,15 @@ import plusImg from "./plus.png"
 
 export default function Habit() {
 
-    const {callApi, userData} = useContext(UserContext)
+    const {callApi, config} = useContext(UserContext)
     const [plus, setPlus] = useState(false)
-    const [teste, setTeste] = useState([])//
+    const [checkData, setCheckData] = useState([])
     const [habit, setHabit] = useState("")
 
     useEffect(() => { 
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${userData.token}`
-            }
-        }
         getHabits(config)
         .then(response => {
-            setTeste(response.data)
+            setCheckData(response.data)
         })
         .catch(response => console.log(response))
     }, [callApi])
@@ -41,7 +37,7 @@ export default function Habit() {
                     </Plus>
                 </Create>
                     {plus ? <FormHabit plus = {plus} setPlus = {setPlus} habit = {habit} setHabit = {setHabit}/> : ""}
-                    {teste.length > 0 ? <ListHabits/> :  
+                    {checkData.length > 0 ? <ListHabits/> :  
                     <Text>
                         Você não tem nenhum hábito cadastrado ainda. 
                         Adicione um hábito para começar a trackear!
@@ -53,19 +49,14 @@ export default function Habit() {
     )
 }
 
-const Container = styled.div`
-    margin-top: 90px;
-    margin-bottom: 140px;
-`
 const Create = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 `
-
 const Title = styled.h1`
-    font-family: Lexend Deca;
+    font-family: "Lexend Deca";
     font-size: 23px;
     font-weight: 400;
     line-height: 29px;
@@ -73,7 +64,6 @@ const Title = styled.h1`
     color: #126BA5;
     margin-left: 10px;
 `
-
 const Plus = styled.div`
     width: 40px;
     height: 35px;
