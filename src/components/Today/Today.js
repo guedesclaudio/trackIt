@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { getHabitsToday } from "../services/trackit.js";
+import {useContext, useEffect, useState} from "react";
+import {getHabitsToday} from "../services/trackit.js";
 import {Container} from "../commom styles/allScreens.js"
 import Topo from "../Topo/Topo.js";
 import Cards from "../Cards/Cards.js";
@@ -7,10 +7,10 @@ import Footer from "../Footer/Footer.js";
 import styled from "styled-components";
 import UserContext from "../contexts/userContext.js";
 import dayjs from "dayjs";
-
+import loading from "./load.gif"
 
 export default function Today() {
-    const {porcentage, setPorcentage, userData, setHabitsToday, teste, callApi, config} = useContext(UserContext)
+    const {porcentage, setPorcentage, setHabitsToday, teste, callApi, config, habitsToday} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
     const dayWeek = dayjs().day()
 
@@ -61,7 +61,7 @@ export default function Today() {
                 <Warning>
                     {porcentage ? <Porcentage>{(Math.round(porcentage*100)) + "% dos hábitos concluídos"}</Porcentage> : "Nenhum hábito concluído ainda"}
                 </Warning>
-                <Cards />
+                {habitsToday.length > 0 ? <Cards /> : <Load><img src = {loading}/></Load>}
             </Container>
             <Footer />
         </Page>
@@ -70,7 +70,6 @@ export default function Today() {
 
 const Page = styled.div`
 `
-
 const TextDate = styled.h1`
     font-family: "Lexend Deca";
     font-size: 23px;
@@ -80,7 +79,6 @@ const TextDate = styled.h1`
     color: #126BA5;
     margin: 20px 0 5px 10px;
 `
-
 const Warning = styled.h2`
     font-family: "Lexend Deca";
     font-size: 18px;
@@ -90,8 +88,16 @@ const Warning = styled.h2`
     color: #BABABA;
     margin-left: 10px;
 `
-
 const Porcentage = styled(Warning)`
     color: #8FC549;
     margin-left: 0;
+`
+const Load = styled.div`
+    width: 60px;
+    margin: 100px auto;
+    
+    img {
+        width: 60px;
+    }
+    
 `

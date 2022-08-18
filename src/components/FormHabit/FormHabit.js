@@ -1,6 +1,5 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import {postHabit} from "../services/trackit.js"
-import {useContext} from "react";
 import {ThreeDots} from "react-loader-spinner";
 import {getHabitsToday} from "../services/trackit.js"
 import UserContext from "../contexts/userContext.js";

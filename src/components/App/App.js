@@ -21,7 +21,7 @@ export default function App() {
     const [teste, setTeste] = useState(false)
     const [habitsToday, setHabitsToday] = useState([])
     const [config, setConfig] = useState(
-        localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null
+        localStorage.getItem("user") ? {headers: {"Authorization": `Bearer ${userData.token}`}} : null
     )
 
     return (

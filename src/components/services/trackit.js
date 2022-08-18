@@ -42,8 +42,9 @@ function postCancelHabitDone(id, config) {
     return promise
 }
 
-function getHistoryDailyHabits() {
-
+function getHistoryDailyHabits(config) {
+    const promise = axios.get(`${baseURL}/habits/history/daily`, config)
+    return promise
 }
 
 export {
