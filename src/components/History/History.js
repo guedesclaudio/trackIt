@@ -7,24 +7,36 @@ import styled from "styled-components";
 import Topo from "../Topo/Topo";
 import Footer from "../Footer/Footer";
 import UserContext from "../contexts/userContext.js";
+import dayjs from "dayjs";
 
 export default function History() {
 
     const {config} = useContext(UserContext)
-    //const [date, setDate] = useState(new Date())
-    const mark = [
-        '04-03-2020',
-        '03-03-2020',
-        '05-03-2020'
-    ]
+    const [value, setValue] = useState(new Date())
+    const [history, setHistory] = useState([])
 
     useEffect(() => {
         getHistoryDailyHabits(config)
         .then((response) => {
-            console.log(response)
+            setHistory(response.data)
         })
         .catch((response) => console.log(response))
     }, [])
+
+    function getClassName(history, date) {
+        const selectDates = history.filter(value => value.day === date)
+        if (selectDates.length === 1) {
+            const habits = selectDates[0].habits
+            const historyStatus = habits.map((habit) => habit.done ? 1 : 0)
+            if (historyStatus.includes(0)) {
+                return "failed"
+            }
+            else {
+                return "success"
+            }
+        }
+        return ""
+    }
 
     return (
         <>
@@ -34,14 +46,14 @@ export default function History() {
                     Histórico
                 </Title>
                 <Text>
-                    Em breve você poderá ver o histórico dos seus hábitos aqui!
+                    Acompanhe o histórico da sua evolução
                 </Text>
                 <HistoryCalendar>
                     <Calendar 
                     className = "react-calendar"
                     locale = "pt-BR"
-                    
-                    
+                    value = {value}
+                    tileClassName = {({date}) => getClassName(history, dayjs(new Date(date)).format("DD/MM/YYYY"))}
                     />
                 </HistoryCalendar>
             </Container>
@@ -80,7 +92,14 @@ const HistoryCalendar = styled.div`
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     }
 
-    .highlight {
-        color: red;
+    .failed {
+        background-color: #FA6771;
+        border: 6px solid white;
+        border-radius: 50%;
+    }
+    .success {
+        background-color: #9FF76C;
+        border-radius: 50%;
+        border: 6px solid white;
     }
 `
