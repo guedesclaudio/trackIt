@@ -5,7 +5,7 @@
   <br>
   <br>
   <div align="center">
-  <a href="http://track-it-sable.vercel.app/"><img src="./trackitScreen.png" width="400"></a>
+  <a href="http://track-it-sable.vercel.app/"><img src="./trackitScreen.png" width="400" heigth="300"></a>
   <br>
   <br>
   <p>Clique na imagem para acessar a página</p>
