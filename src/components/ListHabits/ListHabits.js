@@ -115,20 +115,19 @@ export default function ListHabits() {
 
 const Card = styled.div`
     margin: 20px auto;
-    height: 91px;
+    min-height: 91px;
     width: 340px;
     border-radius: 5px;
     background: #FFFFFF;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 
     img {
-        margin-top: -50px;
+        height: 14px;
+        margin-top: 10px;
         margin-right: 10px;
     }
 `
-
 const Title = styled.h1`
     font-family: "Lexend Deca";
     font-size: 20px;
@@ -138,14 +137,12 @@ const Title = styled.h1`
     color: #666666;
     margin: 10px 0 10px 10px;
 `
-
 const DaysDiv = styled.div`
     display: flex;
     justify-content: left;
     align-items: center;
     margin: 10px 0 10px 10px;
 `
-
 const DayWeek = styled.div`
     height: 30px;
     width: 30px;

@@ -20,7 +20,8 @@
 - Criação e exclusão dos hábitos
 - Progresso do usuário a cada hábito concluido
 - Escolha de dias específicos para os seus hábitos
-- Utilização de rotas privadas, acesso restrito para quem possui login
+- Utilização de rotas privadas, acesso restrito para usuários com login
+- Persistência dos dados através do local storage
 
 # Tecnologias utilizadas
 - HTML5

@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import loading from "./load.gif"
 
 export default function Today() {
-    const {porcentage, setPorcentage, setHabitsToday, teste, callApi, config, habitsToday} = useContext(UserContext)
+    const {porcentage, setPorcentage, setHabitsToday, teste, callApi, config, habitsToday, userData} = useContext(UserContext)
     const [nameDay, setNameDay] = useState()
     const dayWeek = dayjs().day()
 
@@ -42,7 +42,7 @@ export default function Today() {
         }
     }, [])
 
-    useEffect(() => { 
+    useEffect(() => {
         getHabitsToday(config)
         .then(response => {
             setHabitsToday(response.data)
@@ -55,6 +55,11 @@ export default function Today() {
         <Page>
             <Topo/>
             <Container>
+                <BoxMsg>
+                    <Salutation>
+                        {`Olá, ${userData.name}. Bem vindo!`}
+                    </Salutation>
+                </BoxMsg>
                 <TextDate>
                     {`${nameDay} ${dayjs().date()}/${dayjs().month()}`}
                 </TextDate>
@@ -78,6 +83,22 @@ const TextDate = styled.h1`
     text-align: left;
     color: #126BA5;
     margin: 20px 0 5px 10px;
+`
+const BoxMsg = styled.div`
+    width: 300px;
+    height: 40px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: white;
+    margin-left: 10px;
+    border-radius: 0 10px 10px 10px;
+    box-shadow: 2px 2px 2px 1px grey;
+`
+const Salutation = styled(TextDate)`
+    font-size: 18px;
+    margin: 0;
+    margin-left: 5px;
 `
 const Warning = styled.h2`
     font-family: "Lexend Deca";

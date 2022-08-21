@@ -46,7 +46,7 @@ export default function Login() {
             })
             setConfig({...config,
                 headers: {
-                    "Authorization": `Bearer ${userData.token}`
+                    "Authorization": `Bearer ${response.data.token}`
                 }
             })
             navigate("/hoje")

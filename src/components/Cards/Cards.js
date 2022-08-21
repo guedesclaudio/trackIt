@@ -112,7 +112,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     margin: 20px auto;
-    height: 94px;
+    min-height: 94px;
     width: 340px;
     border-radius: 5px;
     background: #FFFFFF;
