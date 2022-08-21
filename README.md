@@ -20,6 +20,7 @@
 - Criação e exclusão dos hábitos
 - Progresso do usuário a cada hábito concluido
 - Escolha de dias específicos para os seus hábitos
+- Acesso a tela de histórico para acompanhar a sua evolução com calendário
 - Utilização de rotas privadas, acesso restrito para usuários com login
 - Persistência dos dados através do local storage
 
@@ -32,6 +33,7 @@
 - REACT-ROUTER-DOM
 - REACT-LOADER-SPINNER
 - REACT-CIRCULAR-PROGRESSBAR
+- REACT-CALENDAR
 - DAYJS
 - GIT
 - GITHUB
