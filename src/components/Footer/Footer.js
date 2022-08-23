@@ -33,7 +33,7 @@ export default function Footer() {
                               path: {
                                 stroke: "#FFFFFF",
                               },
-                        }}/>;
+                        }}/>
                     </Circle>
                 </Link>
             </Loading>
